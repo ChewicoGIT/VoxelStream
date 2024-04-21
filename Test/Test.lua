@@ -11,13 +11,12 @@ project "Test"
    {
       "src",
 
-	  -- Include Core
 	  "../VoxelStream/Include"
    }
 
    links
    {
-      "Core"
+      "VoxelStream"
    }
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
@@ -37,9 +36,3 @@ project "Test"
        runtime "Release"
        optimize "On"
        symbols "On"
-
-   filter "configurations:Dist"
-       defines { "DIST" }
-       runtime "Release"
-       optimize "On"
-       symbols "Off"

@@ -10,6 +10,19 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\VoxelStream\Definitions.h" />
+    <ClInclude Include="src\Chunk.h" />
+    <ClInclude Include="Include\VoxelStream\DataStructures.h" />
+    <ClInclude Include="Include\VoxelStream\VoxelDatabase.h" />
+    <ClInclude Include="src\InternalDefinitions.h" />
+    <ClInclude Include="src\FullyLoadedChunk.h" />
+    <ClInclude Include="src\OptimizedChunk.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Chunk.cpp" />
+    <ClCompile Include="src\VoxelDatabase.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1FB4128D-8B69-8B82-145E-855980128286}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
