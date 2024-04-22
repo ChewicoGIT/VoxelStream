@@ -10,6 +10,8 @@
 #define VOXEL_ID(x, y, z) x + y * VOXEL_X + z * VOXEL_X * VOXELY 
 
 namespace VS {
+	class Chunk;
+	class FullyLoadedChunk;
 
 	enum class ChunkSaveState
 	{
@@ -22,7 +24,7 @@ namespace VS {
 	struct FullyLoadedChunkLink {
 		//In case it is not assigned the _chunk will be nullptr
 		Chunk* _chunk;
-		FullyLoadedChunkLink* _chunkData;
+		FullyLoadedChunk* _chunkData;
 	};
 
 }

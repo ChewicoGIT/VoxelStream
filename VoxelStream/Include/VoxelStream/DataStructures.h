@@ -3,7 +3,7 @@
 namespace VS {
 	
 	class Chunk;
-	class MemoryManager;
+	class ChunkMemoryManager;
 
 	struct FullyLoadedChunk;
 	//This is a lik between a chunk and its fully loaded chunk data
