@@ -7,11 +7,12 @@
 #define VOXEL_TYPE unsigned short
 #define ARRAY_POINTER unsigned short
 
-#define VOXEL_ID(x, y, z) x + y * VOXEL_X + z * VOXEL_X * VOXELY 
+#define VOXEL_ID(x, y, z) x + y * VOXEL_X + z * VOXEL_X * VOXEL_Y 
 
 namespace VS {
 	class Chunk;
 	class FullyLoadedChunk;
+	class OptimizedChunk;
 
 	enum class ChunkSaveState
 	{
@@ -20,7 +21,7 @@ namespace VS {
 		CompressedChunk
 	}; 
 
-
+	//This is a lik between a chunk and its fully loaded chunk data
 	struct FullyLoadedChunkLink {
 		//In case it is not assigned the _chunk will be nullptr
 		Chunk* _chunk;

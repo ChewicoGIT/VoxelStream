@@ -31,6 +31,11 @@ VS::ChunkMemoryManager::~ChunkMemoryManager()
 	delete chunks;
 }
 
+VS::Chunk& VS::ChunkMemoryManager::getChunk(unsigned int id)
+{
+	return chunks[id];
+}
+
 void VS::ChunkMemoryManager::incrementPriority(Chunk& _chunk)
 {
 	switch (_chunk.saveState)
@@ -75,7 +80,6 @@ void VS::ChunkMemoryManager::incrementPriority(Chunk& _chunk)
 		}
 	
 		//To do...
-	
 		break;
 	case ChunkSaveState::SameType:
 		break;

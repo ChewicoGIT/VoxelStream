@@ -1,5 +1,4 @@
 #pragma once
-#include "OptimizedChunk.h"
 #include "InternalDefinitions.h"
 
 namespace VS {

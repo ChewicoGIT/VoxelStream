@@ -1,6 +1,5 @@
 #pragma once
 #include "VoxelStream/DataStructures.h"
-#include "VoxelStream/Definitions.h"
 
 namespace VS {
 
@@ -9,10 +8,13 @@ namespace VS {
 	public:
 		ChunkMemoryManager(DatabaseOptions _dbOpt);
 		~ChunkMemoryManager();
+
+		Chunk& getChunk(unsigned int id);
+		
 	private:
 		DatabaseOptions dbOpt;
 
-		/// This is a list that stores the chunks(the general info about the chunk)
+		/// This is a list that stores the chunks
 		Chunk* chunks;
 
 		/// This stores the chunk priority of fully loaded chunks,

@@ -2,12 +2,8 @@
 
 namespace VS {
 	
-	class Chunk;
 	class ChunkMemoryManager;
-
-	struct FullyLoadedChunk;
-	//This is a lik between a chunk and its fully loaded chunk data
-	struct FullyLoadedChunkLink;
+	class VoxelMemoryPaletteManager;
 
 	struct DatabaseOptions {
 		
@@ -16,17 +12,39 @@ namespace VS {
 		/// has 32 voxels in each direction so for example
 		/// a database 64 voxels in x direction will
 		/// need 2 in chunk size x.
-		unsigned int chunkSizeX = 10;
+		unsigned int chunkSizeX = 20;
 		unsigned int chunkSizeY = 5;
-		unsigned int chunkSizeZ = 10;
-		
+		unsigned int chunkSizeZ = 20;
+
+		/// This is a very important value and it specifies
+		/// the max id of a block id, if you try to acces a 
+		/// block id bigger than this it will give an error
+		unsigned int maxBlockID;
+
 		/// This parameter tell the buffer size of voxel raw Data.
 		/// This data is stored raw so consumes more memory
-		unsigned int fullyLoadedChunkBufferSize = 100;
+		/// A convenient value would be the chunkSizeX * chunkSizeZ
+		unsigned int fullyLoadedChunkBufferSize = 20 * 20;
 
+		/// This is the amount of numbers that a chunk fowards
+		/// when a voxel is modified
+		unsigned int modifiedVoxelPriorityValue = 10;
+		/// This is the amount of numbers that a chunk fowards
+		/// when a voxel is obtained
+		unsigned int queryedVoxelPriorityValue = 1;
 
 	};
 
+	/// This is the data that is in a voxel, to change the data
+	/// that can be store you have to build the library
+	struct VoxelData {
+		unsigned short blockID;
+		unsigned short blockState;
 
+		bool operator == (const VoxelData& _b) {
+			return _b.blockID == this->blockID &&
+				_b.blockState == this->blockState;
+		}
 
+	};
 }

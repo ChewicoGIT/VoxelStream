@@ -15,13 +15,13 @@
     <ClInclude Include="Include\VoxelStream\DataStructures.h">
       <Filter>Include\VoxelStream</Filter>
     </ClInclude>
-    <ClInclude Include="Include\VoxelStream\Definitions.h">
-      <Filter>Include\VoxelStream</Filter>
-    </ClInclude>
     <ClInclude Include="Include\VoxelStream\VoxelDatabase.h">
       <Filter>Include\VoxelStream</Filter>
     </ClInclude>
     <ClInclude Include="src\Chunk.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChunkMemoryManager.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\FullyLoadedChunk.h">
@@ -33,15 +33,18 @@
     <ClInclude Include="src\OptimizedChunk.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChunkMemoryManager.h" />
+    <ClInclude Include="src\VoxelMemoryPaletteManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Chunk.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\ChunkMemoryManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\VoxelDatabase.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\ChunkMemoryManager.cpp" />
+    <ClCompile Include="src\VoxelMemoryPaletteManager.cpp" />
   </ItemGroup>
 </Project>

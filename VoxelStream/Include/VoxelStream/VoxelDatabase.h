@@ -1,6 +1,5 @@
 #pragma once
 #include "DataStructures.h"
-#include "Definitions.h"
 
 namespace VS {
 
@@ -10,9 +9,16 @@ namespace VS {
 		VoxelDatabase(DatabaseOptions opt);
 		~VoxelDatabase();
 
+		void AddVoxel(unsigned int x, unsigned int y, unsigned int z, VoxelData voxelData);
+		/// Gets the voxel data of a specific space
+		/// Be careful because it does not have bound limit and could cause error
+		VoxelData GetVoxel(unsigned int x, unsigned int y, unsigned int z);
+
 	private:
 		DatabaseOptions dbOpt;
 		ChunkMemoryManager* chunkMemory;
+		VoxelMemoryPaletteManager* voxelPalette;
+
 
 	};
 
