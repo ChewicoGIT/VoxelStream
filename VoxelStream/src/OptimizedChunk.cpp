@@ -18,6 +18,7 @@ VOXEL_TYPE VS::OptimizedChunk::getVoxel(unsigned char position)
 VS::OptimizedChunk::OptimizedChunk()
 {
 	nodes = std::vector<Node>(100);
+	nodes.push_back(Node() = { .voxel = 0, .repetition = VOXEL_X * VOXEL_Y * VOXEL_Z });
 }
 
 void VS::OptimizedChunk::setVoxel(unsigned char position, VOXEL_TYPE _voxel)

@@ -5,6 +5,11 @@ VS::VoxelMemoryPaletteManager::VoxelMemoryPaletteManager(DatabaseOptions _dbOpt)
 	dbOpt = _dbOpt;
 	dataPalettePointer = new std::vector<VOXEL_TYPE>();
 
+	getVoxelID(VoxelData() = {
+			.blockID = 0,
+			.blockState = 0
+	});
+
 }
 
 VOXEL_TYPE VS::VoxelMemoryPaletteManager::getVoxelID(VoxelData voxel)

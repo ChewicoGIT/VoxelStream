@@ -11,6 +11,9 @@ namespace VS {
 		~ChunkMemoryManager();
 
 		Chunk& getChunk(unsigned int id);
+		void incrementPriority(Chunk& _chunk);
+
+		void debug();
 		
 	private:
 		DatabaseOptions dbOpt;
@@ -37,7 +40,6 @@ namespace VS {
 		/// loaded chunks 
 		int emptyFullyLoadedChunks;
 
-		void incrementPriority(Chunk& _chunk);
 
 	};
 

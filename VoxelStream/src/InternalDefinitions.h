@@ -23,7 +23,7 @@ namespace VS {
 	//This is a lik between a chunk and its fully loaded chunk data
 	struct FullyLoadedChunkLink {
 		//In case it is not assigned the _chunk will be nullptr
-		Chunk* _chunk;
+		Chunk* _chunk = nullptr;
 		FullyLoadedChunk* _chunkData;
 	};
 

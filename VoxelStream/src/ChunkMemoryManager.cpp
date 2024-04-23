@@ -1,3 +1,4 @@
+#include <iostream>
 #include "ChunkMemoryManager.h"
 #include "Chunk.h"
 #include "FullyLoadedChunk.h"
@@ -68,6 +69,32 @@ void VS::ChunkMemoryManager::incrementPriority(Chunk& _chunk)
 			_frontChunkLink._chunk->priorityPosition = _oldPriorityPosition;
 
 		break;
+
+	}
+
+}
+
+void VS::ChunkMemoryManager::debug()
+{
+	
+	std::cout << "Fully uploaded chunks : " << dbOpt.fullyLoadedChunkBufferSize << "\n";
+	for (int x = 0; x < dbOpt.fullyLoadedChunkBufferSize; x++) {
+
+		std::cout << x + 1 << " - ";
+
+		if (fullyLoadedChunksPriority[x]._chunk == nullptr) {
+			std::cout << "empty\n";
+			continue;
+		}
+
+		unsigned int chunkID = fullyLoadedChunksPriority[x]._chunk - chunks;
+		chunkID /= sizeof(Chunk*);
+
+		unsigned int chunkID_Y = chunkID / (dbOpt.chunkSizeX * dbOpt.chunkSizeZ);
+		unsigned int chunkID_Z = (chunkID - chunkID_Y * dbOpt.chunkSizeX * dbOpt.chunkSizeZ) / dbOpt.chunkSizeX;
+		unsigned int chunkID_X = chunkID - chunkID_Y * dbOpt.chunkSizeX * dbOpt.chunkSizeZ - chunkID_Z * dbOpt.chunkSizeX;
+
+		std::cout << "pos x: " << chunkID_X << " y: " << chunkID_Y << " z: " << chunkID_Z << "\n";
 
 	}
 

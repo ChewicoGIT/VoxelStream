@@ -19,7 +19,7 @@ VOXEL_TYPE VS::Chunk::getVoxel(unsigned short voxelID)
 	return 0;
 }
 
-void VS::Chunk::ModifyVoxel(unsigned short voxelID, VOXEL_TYPE _voxel)
+void VS::Chunk::modifyVoxel(unsigned short voxelID, VOXEL_TYPE _voxel)
 {
 	switch (saveState)
 	{

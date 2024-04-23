@@ -9,7 +9,7 @@ namespace VS {
 		~Chunk();
 
 		VOXEL_TYPE getVoxel(unsigned short voxelID);
-		void ModifyVoxel(unsigned short voxelID, VOXEL_TYPE _voxel);
+		void modifyVoxel(unsigned short voxelID, VOXEL_TYPE _voxel);
 
 		ChunkSaveState saveState = ChunkSaveState::CompressedChunk;
 		// We don't know which array it is, only if we search for the save state

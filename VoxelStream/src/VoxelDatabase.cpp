@@ -32,7 +32,7 @@ void VS::VoxelDatabase::AddVoxel(unsigned int x, unsigned int y, unsigned int z,
 #endif
 
 	//Gets the id of the voxel type
-	VOXEL_TYPE voxelID = voxelPalette->getVoxelID(voxelData);
+	VOXEL_TYPE _voxel = voxelPalette->getVoxelID(voxelData);
 
 	//This is the most efficient way of dividing by 32 (0b_0010_0000)
 	unsigned int chunkID_X = x >> 5;
@@ -47,6 +47,11 @@ void VS::VoxelDatabase::AddVoxel(unsigned int x, unsigned int y, unsigned int z,
 	unsigned int relativeZ = z & 31;
 
 	Chunk& _chunk = chunkMemory->getChunk(chunkID);
+
+	for(int x = 0; x < dbOpt.modifiedVoxelPriorityValue; x++)
+		chunkMemory->incrementPriority(_chunk);
+
+	_chunk.modifyVoxel(VOXEL_ID(relativeX, relativeY, relativeZ), _voxel);
 
 }
 
@@ -73,7 +78,15 @@ VS::VoxelData VS::VoxelDatabase::GetVoxel(unsigned int x, unsigned int y, unsign
 	unsigned int relativeZ = z & 31;
 
 	Chunk& _chunk = chunkMemory->getChunk(chunkID);
+	for (int x = 0; x < dbOpt.queryedVoxelPriorityValue; x++)
+		chunkMemory->incrementPriority(_chunk);
+
 	VOXEL_TYPE voxelID = _chunk.getVoxel(VOXEL_ID(relativeX, relativeY, relativeZ));
 
 	return voxelPalette->getVoxelData(voxelID);
+}
+
+void VS::VoxelDatabase::debugData()
+{
+	chunkMemory->debug();
 }
