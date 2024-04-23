@@ -19,6 +19,7 @@ namespace VS {
 		VOXEL_TYPE chunkSameTypeID = 0;
 
 		VOXEL_TYPE getVoxel(unsigned short voxelID);
+		void ModifyVoxel(unsigned short voxelID, VOXEL_TYPE _voxel);
 	public:
 		Chunk();
 		~Chunk();

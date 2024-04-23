@@ -19,6 +19,22 @@ VOXEL_TYPE VS::Chunk::getVoxel(unsigned short voxelID)
 	return 0;
 }
 
+void VS::Chunk::ModifyVoxel(unsigned short voxelID, VOXEL_TYPE _voxel)
+{
+	switch (saveState)
+	{
+		// If it is a fully loaded chunk is easy to retrive to
+	case VS::ChunkSaveState::FullyLoadedChunk:
+		fullyLoadedChunk->voxelData[voxelID] = _voxel;
+		break;
+
+	case VS::ChunkSaveState::CompressedChunk:
+		optimizedChunk->setVoxel(voxelID, _voxel);
+		break;
+
+	}
+}
+
 VS::Chunk::Chunk()
 {
 	saveState = ChunkSaveState::CompressedChunk;
