@@ -41,7 +41,7 @@ namespace VS {
 		unsigned short blockID;
 		unsigned short blockState;
 
-		bool operator == (const VoxelData& _b) {
+		inline bool operator == (const VoxelData& _b) const {
 			return _b.blockID == this->blockID &&
 				_b.blockState == this->blockState;
 		}

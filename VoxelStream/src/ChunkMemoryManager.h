@@ -1,5 +1,6 @@
 #pragma once
 #include "VoxelStream/DataStructures.h"
+#include "Chunk.h"
 
 namespace VS {
 

@@ -23,7 +23,7 @@ void VS::Chunk::ModifyVoxel(unsigned short voxelID, VOXEL_TYPE _voxel)
 {
 	switch (saveState)
 	{
-		// If it is a fully loaded chunk is easy to retrive to
+		// If it is a fully loaded chunk is easy to obtain
 	case VS::ChunkSaveState::FullyLoadedChunk:
 		fullyLoadedChunk->voxelData[voxelID] = _voxel;
 		break;

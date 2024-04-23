@@ -69,21 +69,6 @@ void VS::ChunkMemoryManager::incrementPriority(Chunk& _chunk)
 
 		break;
 
-	case ChunkSaveState::CompressedChunk:
-	
-		// This means that the cunk has to swap with a fully loaded,
-		// here is the dangerous part where we will exchange big chunks of data
-		// so we want to minimize this call
-		if (_chunk.priorityPosition == 0) {
-			//To do..
-	
-		}
-	
-		//To do...
-		break;
-	case ChunkSaveState::SameType:
-		break;
-
 	}
 
 }
