@@ -4,11 +4,11 @@
 namespace VS {
 	class Chunk
 	{
-	public:
+	private:
 		// We don't know which array it is, only if we search for the save state
 		ARRAY_POINTER priorityPosition;
 
-		ChunkSaveState saveState = ChunkSaveState::SameType;
+		ChunkSaveState saveState = ChunkSaveState::CompressedChunk;
 
 		// Only in case it is a optimizedChunk
 		OptimizedChunk* optimizedChunk;
@@ -19,7 +19,9 @@ namespace VS {
 		VOXEL_TYPE chunkSameTypeID = 0;
 
 		VOXEL_TYPE getVoxel(unsigned short voxelID);
-
+	public:
+		Chunk();
+		~Chunk();
 
 
 	};

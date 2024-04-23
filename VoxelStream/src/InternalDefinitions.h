@@ -16,7 +16,6 @@ namespace VS {
 
 	enum class ChunkSaveState
 	{
-		SameType,
 		FullyLoadedChunk,
 		CompressedChunk
 	}; 

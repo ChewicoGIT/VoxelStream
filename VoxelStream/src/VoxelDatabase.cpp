@@ -34,7 +34,7 @@ void VS::VoxelDatabase::AddVoxel(unsigned int x, unsigned int y, unsigned int z,
 	//Gets the id of the voxel type
 	VOXEL_TYPE voxelID = voxelPalette->getVoxelID(voxelData);
 
-	//This is a more efficient way of dividing by 32 (0b_0010_0000)
+	//This is the most efficient way of dividing by 32 (0b_0010_0000)
 	unsigned int chunkID_X = x >> 5;
 	unsigned int chunkID_Y = y >> 5;
 	unsigned int chunkID_Z = z >> 5;

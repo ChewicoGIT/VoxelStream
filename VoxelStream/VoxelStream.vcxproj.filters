@@ -33,7 +33,9 @@
     <ClInclude Include="src\OptimizedChunk.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\VoxelMemoryPaletteManager.h" />
+    <ClInclude Include="src\VoxelMemoryPaletteManager.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Chunk.cpp">
@@ -45,6 +47,9 @@
     <ClCompile Include="src\VoxelDatabase.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\VoxelMemoryPaletteManager.cpp" />
+    <ClCompile Include="src\VoxelMemoryPaletteManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OptimizedChunk.cpp" />
   </ItemGroup>
 </Project>
