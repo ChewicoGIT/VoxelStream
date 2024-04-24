@@ -18,11 +18,11 @@ int main() {
 	while (true)
 	{
 		std::cout << vd.GetVoxel(10, 10, 10).blockID << "\n";
-		for(int x = 0; x < 32; x++)
-		vd.AddVoxel(3 * 32 + 1, 3 * 32 + 1, 3 * 32 + 1, VS::VoxelData{
-			.blockID = 18,
-			.blockState = 0
-			});
+		for(int x = 0; x < 1; x++)
+			vd.AddVoxel(3 * 32 + 1, 3 * 32 + 1, 3 * 32 + 1, VS::VoxelData{
+				.blockID = 18,
+				.blockState = 0
+				});
 
 		vd.debugData();
 		_sleep(100);
