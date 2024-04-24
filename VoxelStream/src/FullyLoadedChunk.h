@@ -3,10 +3,14 @@
 
 namespace VS {
 
-	struct FullyLoadedChunk {
-
-		bool InUse = false;
+	class FullyLoadedChunk {
+	
+	public:
 		VOXEL_TYPE voxelData[VOXEL_X * VOXEL_Y * VOXEL_Z];
+		FullyLoadedChunk();
+
+		void load(OptimizedChunk* optimizedChunk);
+		
 		
 	};
 

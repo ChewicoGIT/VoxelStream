@@ -2,12 +2,12 @@
 #include "VoxelStream/VoxelDatabase.h"
 
 const VS::DatabaseOptions _dbOpt = {
-	.chunkSizeX = 10,
-	.chunkSizeY = 10,
-	.chunkSizeZ = 10,
-	.maxBlockID = 20,
-	.fullyLoadedChunkBufferSize = 10 * 10,
-	.modifiedVoxelPriorityValue = 10,
+	.chunkSizeX = 5,
+	.chunkSizeY = 5,
+	.chunkSizeZ = 5,
+	.maxBlockID = 300,
+	.fullyLoadedChunkBufferSize = 5 * 5 + 1,
+	.modifiedVoxelPriorityValue = 5,
 	.queryedVoxelPriorityValue = 1
 };
 
@@ -18,14 +18,16 @@ int main() {
 	while (true)
 	{
 		std::cout << vd.GetVoxel(10, 10, 10).blockID << "\n";
-		getchar();
-		vd.AddVoxel(10, 10, 10, VS::VoxelData{
+		for(int x = 0; x < 32; x++)
+		vd.AddVoxel(3 * 32 + 1, 3 * 32 + 1, 3 * 32 + 1, VS::VoxelData{
 			.blockID = 18,
 			.blockState = 0
 			});
 
 		vd.debugData();
 		_sleep(100);
+		getchar();
+
 	}
 
 }

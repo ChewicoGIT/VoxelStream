@@ -1,6 +1,8 @@
 #include "OptimizedChunk.h"
+#include "FullyLoadedChunk.h"
+#include <iostream>
 
-VOXEL_TYPE VS::OptimizedChunk::getVoxel(unsigned char position)
+VOXEL_TYPE VS::OptimizedChunk::getVoxel(unsigned short position)
 {
 	int currentID = 0;
 
@@ -17,22 +19,43 @@ VOXEL_TYPE VS::OptimizedChunk::getVoxel(unsigned char position)
 
 VS::OptimizedChunk::OptimizedChunk()
 {
-	nodes = std::vector<Node>(100);
 	nodes.push_back(Node() = { .voxel = 0, .repetition = VOXEL_X * VOXEL_Y * VOXEL_Z });
 }
 
-void VS::OptimizedChunk::setVoxel(unsigned char position, VOXEL_TYPE _voxel)
+VS::OptimizedChunk::OptimizedChunk(FullyLoadedChunk* _fullyLoadedChunk)
+{
+
+	Node workingNode = {
+		.voxel = _fullyLoadedChunk->voxelData[0],
+		.repetition = 1
+	};
+
+	nodes = std::vector<Node>(256);
+
+	for (int x = 1; x < VOXEL_X * VOXEL_Y * VOXEL_Z; x++) {
+		if (_fullyLoadedChunk->voxelData[x] == workingNode.voxel)
+			workingNode.repetition++;
+
+		nodes.push_back(workingNode);
+		workingNode.voxel = _fullyLoadedChunk->voxelData[x];
+		workingNode.repetition = 1;
+
+	}
+	nodes.push_back(workingNode);
+
+}
+
+void VS::OptimizedChunk::setVoxel(unsigned short position, VOXEL_TYPE _voxel)
 {
 
 	int listID = 0;
 	int currentID = 0;
 	for (Node& _node : nodes) {
-		if (position < currentID) {
+		if (position > currentID + _node.repetition) {
 			currentID += _node.repetition;
 			listID++;
 			continue;
 		}
-
 
 		// If it is the same type we do nothing
 		if (_node.voxel == _voxel)

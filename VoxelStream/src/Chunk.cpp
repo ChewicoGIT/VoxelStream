@@ -11,7 +11,7 @@ VOXEL_TYPE VS::Chunk::getVoxel(unsigned short voxelID)
 	case VS::ChunkSaveState::FullyLoadedChunk:
 		return fullyLoadedChunk->voxelData[voxelID];
 
-	case VS::ChunkSaveState::CompressedChunk:
+	case VS::ChunkSaveState::OptimizedChunk:
 		return optimizedChunk->getVoxel(voxelID);
 
 	}
@@ -28,22 +28,54 @@ void VS::Chunk::modifyVoxel(unsigned short voxelID, VOXEL_TYPE _voxel)
 		fullyLoadedChunk->voxelData[voxelID] = _voxel;
 		break;
 
-	case VS::ChunkSaveState::CompressedChunk:
+	case VS::ChunkSaveState::OptimizedChunk:
 		optimizedChunk->setVoxel(voxelID, _voxel);
 		break;
 
 	}
 }
 
-VS::Chunk::Chunk()
+void VS::Chunk::useFullyLoadedChunk(FullyLoadedChunk* _fullyLoadedChunk, ARRAY_POINTER _priorityPosition)
 {
-	saveState = ChunkSaveState::CompressedChunk;
+	fullyLoadedChunk = _fullyLoadedChunk;
+
+	priorityPosition = _priorityPosition;
+	saveState = ChunkSaveState::FullyLoadedChunk;
+	
+}
+
+void VS::Chunk::useOptimizedChunk(ARRAY_POINTER _priorityPosition)
+{
+	priorityPosition = _priorityPosition;
 	optimizedChunk = new OptimizedChunk();
+	saveState = ChunkSaveState::OptimizedChunk;
+}
+
+void VS::Chunk::convertToOptimizedChunk(ARRAY_POINTER _priorityPosition)
+{
+	priorityPosition = _priorityPosition;
+	optimizedChunk = new OptimizedChunk(fullyLoadedChunk);
+	saveState = ChunkSaveState::FullyLoadedChunk;
+
+	fullyLoadedChunk = nullptr;
+
+}
+
+void VS::Chunk::convertToFullyLoadedChunk(ARRAY_POINTER _priorityPosition, FullyLoadedChunk* data)
+{
+	fullyLoadedChunk = data;
+	priorityPosition = _priorityPosition;
+	saveState = ChunkSaveState::FullyLoadedChunk;
+
+	data->load(optimizedChunk);
+	delete optimizedChunk;
+	optimizedChunk = nullptr;
 
 }
 
 VS::Chunk::~Chunk()
 {
-	delete optimizedChunk;
+	if (optimizedChunk != nullptr)
+		delete optimizedChunk;
 }
 

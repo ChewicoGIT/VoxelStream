@@ -14,9 +14,11 @@ VS::VoxelMemoryPaletteManager::VoxelMemoryPaletteManager(DatabaseOptions _dbOpt)
 
 VOXEL_TYPE VS::VoxelMemoryPaletteManager::getVoxelID(VoxelData voxel)
 {
-	for (const VOXEL_TYPE& _paletteID : dataPalettePointer[voxel.blockID]) {
-		if (paletteData[_paletteID].voxelData == voxel)
-			return _paletteID;
+	for (int i = 0; i < dataPalettePointer[voxel.blockID].size(); i++) {
+
+		VOXEL_TYPE _currentPaletteID = dataPalettePointer[voxel.blockID][i];
+		if (paletteData[_currentPaletteID].voxelData == voxel)
+			return _currentPaletteID;
 	}
 
 	VOXEL_TYPE _voxelPosition = paletteData.size();

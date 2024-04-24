@@ -17,7 +17,7 @@ namespace VS {
 	enum class ChunkSaveState
 	{
 		FullyLoadedChunk,
-		CompressedChunk
+		OptimizedChunk
 	}; 
 
 	//This is a lik between a chunk and its fully loaded chunk data

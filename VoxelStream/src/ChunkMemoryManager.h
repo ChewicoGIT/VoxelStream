@@ -14,6 +14,7 @@ namespace VS {
 		void incrementPriority(Chunk& _chunk);
 
 		void debug();
+
 		
 	private:
 		DatabaseOptions dbOpt;

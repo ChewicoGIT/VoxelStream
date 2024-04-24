@@ -9,15 +9,15 @@ namespace VS {
 	};
 
 	class OptimizedChunk {
-	private:
-		std::vector<Node> nodes;
-
 
 	public:
 		OptimizedChunk();
+		OptimizedChunk(FullyLoadedChunk* _fullyLoadedChunk);
 
-		VOXEL_TYPE getVoxel(unsigned char position);
-		void setVoxel(unsigned char position, VOXEL_TYPE _voxel);
+		VOXEL_TYPE getVoxel(unsigned short position);
+		void setVoxel(unsigned short position, VOXEL_TYPE _voxel);
+
+		std::vector<Node> nodes;
 
 	};
 
