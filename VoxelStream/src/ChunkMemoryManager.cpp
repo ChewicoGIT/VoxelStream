@@ -111,7 +111,7 @@ void VS::ChunkMemoryManager::incrementPriority(Chunk& _chunk)
 			// Convert the optimized chunk to fully loaded chunk
 			fullyLoadedChunksPriority[dbOpt.fullyLoadedChunkBufferSize - 1]._chunk = _oldOptimizedChunk;
 			_oldOptimizedChunk->convertToFullyLoadedChunk(dbOpt.fullyLoadedChunkBufferSize - 1,
-				fullyLoadedChunksPriority[dbOpt.fullyLoadedChunkBufferSize - 1]._chunkData);
+				_oldFullyLoadedLink._chunkData);
 
 			return;
 		}

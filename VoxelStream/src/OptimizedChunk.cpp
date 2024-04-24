@@ -51,10 +51,14 @@ void VS::OptimizedChunk::setVoxel(unsigned short position, VOXEL_TYPE _voxel)
 	int listID = 0;
 	int currentID = 0;
 	for (Node& _node : nodes) {
-		if (position > currentID + _node.repetition) {
+		if (position >= currentID + _node.repetition || position < currentID || _node.repetition == 0) {
 			currentID += _node.repetition;
 			listID++;
 			continue;
+		}
+
+		if (nodes.size() > 300) {
+			listID++;
 		}
 
 		// If it is the same type we do nothing
@@ -100,7 +104,7 @@ void VS::OptimizedChunk::setVoxel(unsigned short position, VOXEL_TYPE _voxel)
 			}
 			else {
 				// We can safely add a node to the end
-				nodes.insert(nodes.end(), Node() = { .voxel = _voxel, .repetition = 1 });
+				nodes.push_back(Node() = { .voxel = _voxel, .repetition = 1 });
 				return;
 			}
 
@@ -108,10 +112,18 @@ void VS::OptimizedChunk::setVoxel(unsigned short position, VOXEL_TYPE _voxel)
 
 		// In this case the node is 2 repetitions we can split it in 2
 		if (_node.repetition == 2) {
-			if (currentID == position)
-				nodes.insert(nodes.begin() + currentID, Node() = { .voxel = _voxel, .repetition = 1 });
-			else
-				nodes.insert(nodes.begin() + currentID + 1, Node() = { .voxel = _voxel, .repetition = 1 });
+			if (currentID == position){
+				
+				nodes.insert(nodes.begin() + listID, Node() = { .voxel = _voxel, .repetition = 1 });
+				_node.repetition--;
+			}
+			else {
+				if(position == _node.repetition + currentID)
+					nodes.push_back(Node() = { .voxel = _voxel, .repetition = 1 });
+				else
+					nodes.insert(nodes.begin() + listID + 1, Node() = { .voxel = _voxel, .repetition = 1 });
+				_node.repetition--;
+			}
 			return;
 		}
 
@@ -127,7 +139,8 @@ void VS::OptimizedChunk::setVoxel(unsigned short position, VOXEL_TYPE _voxel)
 		nodes.insert(nodes.begin() + listID + 2, Node() = { .voxel = _node.voxel, .repetition = _endNodeSize });
 
 		return;
-
 	}
+
+
 
 }
