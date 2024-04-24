@@ -9,7 +9,7 @@ namespace VS {
 		VoxelDatabase(DatabaseOptions opt);
 		~VoxelDatabase();
 
-		void AddVoxel(unsigned int x, unsigned int y, unsigned int z, VoxelData voxelData);
+		void SetVoxel(unsigned int x, unsigned int y, unsigned int z, VoxelData voxelData);
 		/// Gets the voxel data of a specific space
 		/// Be careful because it does not have bound check limit and could cause error
 		VoxelData GetVoxel(unsigned int x, unsigned int y, unsigned int z);

@@ -49,10 +49,10 @@ VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt)
 
 VS::ChunkMemoryManager::~ChunkMemoryManager()
 {
-	delete fullyLoadedChunksPriority;
-	delete optimizedChunksPriority;
-	delete fullyLoadedChunks;
-	delete chunks;
+	delete[] chunks;
+	delete[] fullyLoadedChunksPriority;
+	delete[] optimizedChunksPriority;
+	delete[] fullyLoadedChunks;
 }
 
 VS::Chunk& VS::ChunkMemoryManager::getChunk(unsigned int id)

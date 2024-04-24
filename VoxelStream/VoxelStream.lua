@@ -13,8 +13,8 @@ project "VoxelStream"
 	  "Include"
    }
 
-   targetdir ("../bin/" .. OutputDir .. "/%{prj.name}")
-   objdir ("../bin/int/" .. OutputDir .. "/%{prj.name}")
+   targetdir ("../lib/%{cfg.buildcfg}")
+   objdir ("..lib-int/%{cfg.buildcfg}")
 
    filter "system:windows"
        systemversion "latest"

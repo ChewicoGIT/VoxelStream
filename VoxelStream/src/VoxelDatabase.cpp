@@ -21,7 +21,7 @@ VS::VoxelDatabase::~VoxelDatabase()
 
 }
 
-void VS::VoxelDatabase::AddVoxel(unsigned int x, unsigned int y, unsigned int z, VoxelData voxelData)
+void VS::VoxelDatabase::SetVoxel(unsigned int x, unsigned int y, unsigned int z, VoxelData voxelData)
 {
 	// Check for bounds
 #ifdef DEBUG
