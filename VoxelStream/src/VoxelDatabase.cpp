@@ -86,7 +86,7 @@ VS::VoxelData VS::VoxelDatabase::GetVoxel(unsigned int x, unsigned int y, unsign
 	return voxelPalette->getVoxelData(voxelID);
 }
 
-void VS::VoxelDatabase::debugData()
+int VS::VoxelDatabase::getTransformations()
 {
-	chunkMemory->debug();
+	return chunkMemory->transformations;
 }

@@ -1,4 +1,3 @@
-#include <iostream>
 #include "ChunkMemoryManager.h"
 #include "Chunk.h"
 #include "FullyLoadedChunk.h"
@@ -80,13 +79,6 @@ void VS::ChunkMemoryManager::incrementPriority(Chunk& _chunk)
 		_chunkLink = fullyLoadedChunksPriority[_oldPosition];
 		_frontChunkLink = fullyLoadedChunksPriority[_nextPosition];
 
-		// This wont happen because when initializing all positions are occupied
-		// // We want to go to the furthest position without making a gap
-		// while (_frontChunkLink._chunk == nullptr && nextPosition != 0) {
-		//	  nextPosition--;
-		//	  _frontChunkLink = fullyLoadedChunksPriority[nextPosition];
-		// }
-
 		// Finally if it exists we will swap the positions
 		fullyLoadedChunksPriority[_nextPosition] = _chunkLink;
 		fullyLoadedChunksPriority[_oldPosition] = _frontChunkLink;
@@ -113,6 +105,7 @@ void VS::ChunkMemoryManager::incrementPriority(Chunk& _chunk)
 			_oldOptimizedChunk->convertToFullyLoadedChunk(dbOpt.fullyLoadedChunkBufferSize - 1,
 				_oldFullyLoadedLink._chunkData);
 
+			transformations++;
 			return;
 		}
 
@@ -133,28 +126,4 @@ void VS::ChunkMemoryManager::incrementPriority(Chunk& _chunk)
 
 }
 
-void VS::ChunkMemoryManager::debug()
-{
-	
-	std::cout << "Fully uploaded chunks : " << dbOpt.fullyLoadedChunkBufferSize << "\n";
-	for (int x = 0; x < dbOpt.fullyLoadedChunkBufferSize; x++) {
-
-		std::cout << x + 1 << " - \t\t";
-
-		if (fullyLoadedChunksPriority[x]._chunk == nullptr) {
-			std::cout << "empty\n";
-			continue;
-		}
-
-		unsigned int chunkID = fullyLoadedChunksPriority[x]._chunk - &chunks[0];
-
-		unsigned int chunkID_Y = chunkID / (dbOpt.chunkSizeX * dbOpt.chunkSizeZ);
-		unsigned int chunkID_Z = (chunkID - chunkID_Y * dbOpt.chunkSizeX * dbOpt.chunkSizeZ) / dbOpt.chunkSizeX;
-		unsigned int chunkID_X = chunkID - chunkID_Y * dbOpt.chunkSizeX * dbOpt.chunkSizeZ - chunkID_Z * dbOpt.chunkSizeX;
-
-		std::cout << "pos x: " << chunkID_X << " y: " << chunkID_Y << " z: " << chunkID_Z << "\n";
-
-	}
-
-}
 

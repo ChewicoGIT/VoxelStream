@@ -1,5 +1,6 @@
 #pragma once
 #include "InternalDefinitions.h"
+#include <vector>
 
 namespace VS {
 	class Chunk
@@ -19,6 +20,7 @@ namespace VS {
 
 		void convertToOptimizedChunk(ARRAY_POINTER _priorityPosition);
 		void convertToFullyLoadedChunk(ARRAY_POINTER _priorityPosition, FullyLoadedChunk* data);
+
 
 	private:
 

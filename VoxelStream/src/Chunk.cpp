@@ -57,8 +57,6 @@ void VS::Chunk::convertToOptimizedChunk(ARRAY_POINTER _priorityPosition)
 	optimizedChunk = new OptimizedChunk(fullyLoadedChunk);
 	saveState = ChunkSaveState::OptimizedChunk;
 
-	fullyLoadedChunk = nullptr;
-
 }
 
 void VS::Chunk::convertToFullyLoadedChunk(ARRAY_POINTER _priorityPosition, FullyLoadedChunk* data)
@@ -69,7 +67,6 @@ void VS::Chunk::convertToFullyLoadedChunk(ARRAY_POINTER _priorityPosition, Fully
 
 	data->load(optimizedChunk);
 	delete optimizedChunk;
-	optimizedChunk = nullptr;
 
 }
 

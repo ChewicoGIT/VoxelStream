@@ -13,9 +13,7 @@ namespace VS {
 		Chunk& getChunk(unsigned int id);
 		void incrementPriority(Chunk& _chunk);
 
-		void debug();
-
-		
+		int transformations = 0;
 	private:
 		DatabaseOptions dbOpt;
 
