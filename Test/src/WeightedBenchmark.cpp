@@ -1,6 +1,8 @@
 #pragma once
 #include "Common.h"
 
+// ------------------------------------------- WORKING... -------------------------------------------
+
 // You will have 5 category with each one a weight
 int categoryWeight[5] = {
 	16, 8, 4, 2, 1

@@ -7,6 +7,8 @@ namespace VS {
 	{
 	public:
 		VoxelDatabase(DatabaseOptions opt);
+		// To avoid errors, delete copy constructor
+		VoxelDatabase(const VoxelDatabase& _copy) = delete;
 		~VoxelDatabase();
 
 		void SetVoxel(unsigned int x, unsigned int y, unsigned int z, VoxelData voxelData);
@@ -15,6 +17,7 @@ namespace VS {
 		VoxelData GetVoxel(unsigned int x, unsigned int y, unsigned int z);
 
 		int getTransformations();
+
 
 	private:
 		DatabaseOptions dbOpt;

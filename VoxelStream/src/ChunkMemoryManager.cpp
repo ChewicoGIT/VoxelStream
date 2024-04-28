@@ -23,7 +23,7 @@ VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt)
 	fullyLoadedChunks = new FullyLoadedChunk[_fullyLoadedChunkSize];
 
 	// The first ones will be fully loaded
-	for (int x = 0; x < _fullyLoadedChunkSize; x++) {
+	for (unsigned int x = 0; x < _fullyLoadedChunkSize; x++) {
 		FullyLoadedChunkLink& _chunkLink = fullyLoadedChunksPriority[x];
 		_chunkLink._chunkData = &fullyLoadedChunks[x];
 

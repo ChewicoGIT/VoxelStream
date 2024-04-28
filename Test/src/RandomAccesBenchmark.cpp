@@ -4,18 +4,18 @@
 void randomAccesBenchMark() {
 
 	time_t randomSeed = time(NULL);
-	for (int x = 0; x < 5; x++) {
+	for (int x = 0; x < 2; x++) {
 
 		srand(5);
 		auto start = std::chrono::high_resolution_clock::now();
 		for (int x = 0; x < MAX_ITIRENATIONS; x++) {
 
 			int randomX = rand() % (64 * 32);
-			int randomY = rand() % (3 * 32);
+			int randomY = rand() % (16 * 32);
 			int randomZ = rand() % (64 * 32);
 
 			unsigned short randomVoxel = rand() % 200;
-			unsigned short randomStat = rand() % 10;
+			unsigned short randomStat = rand() % 200;
 
 			vd.SetVoxel(randomX, randomY, randomZ, VS::VoxelData() = {
 				.blockID = randomVoxel,
@@ -29,7 +29,8 @@ void randomAccesBenchMark() {
 		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 		std::cout << "Finished writing \n";
 		std::cout << "Transformations: " << vd.getTransformations() << "\n";
-		std::cout << "Time taken: " << duration.count() << " milliseconds" << std::endl;
+		std::cout << "Time taken: " << duration.count() << " milliseconds" << "\n";
+		std::cout << "\n";
 
 	}
 
@@ -39,13 +40,16 @@ void randomAccesBenchMark() {
 	auto _start = std::chrono::high_resolution_clock::now();
 	for (int x = 0; x < MAX_ITIRENATIONS; x++) {
 
-		int randomX = rand() % (5 * 32);
-		int randomY = rand() % (5 * 32);
-		int randomZ = rand() % (5 * 32);
+		int randomX = rand() % (64 * 32);
+		int randomY = rand() % (16 * 32);
+		int randomZ = rand() % (64 * 32);
 
 		unsigned short randomVoxel = rand() % 200;
-		unsigned short randomStat = rand() % 10;
-
+		unsigned short randomStat = rand() % 200;
+		VS::VoxelData voxel{
+			.blockID = 10,
+			.blockState = 0
+		};
 		VS::VoxelData voxel = vd.GetVoxel(randomX, randomY, randomZ);
 
 		if (voxel.blockID != randomVoxel || voxel.blockState != randomStat) {
@@ -58,5 +62,7 @@ void randomAccesBenchMark() {
 	std::cout << "Time taken: " << _duration.count() << " milliseconds" << std::endl;
 
 	std::cout << "Collision errors : " << collisionOrError;
+
+	getchar();
 
 }
