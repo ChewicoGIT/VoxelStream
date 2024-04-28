@@ -1,6 +1,7 @@
 #include "Chunk.h"
 #include "FullyLoadedChunk.h"
 #include "OptimizedChunk.h"
+#include <iostream>
 
 VOXEL_TYPE VS::Chunk::getVoxel(unsigned short voxelID)
 {
@@ -35,6 +36,12 @@ void VS::Chunk::modifyVoxel(unsigned short voxelID, VOXEL_TYPE _voxel)
 	}
 }
 
+void VS::Chunk::initAsOptimizedChunk(OptimizedChunk* _optimizedChunk)
+{
+	optimizedChunk = new OptimizedChunk(*_optimizedChunk);
+	saveState = ChunkSaveState::OptimizedChunk;
+}
+
 void VS::Chunk::useFullyLoadedChunk(FullyLoadedChunk* _fullyLoadedChunk, ARRAY_POINTER _priorityPosition)
 {
 	fullyLoadedChunk = _fullyLoadedChunk;
@@ -54,7 +61,7 @@ void VS::Chunk::useOptimizedChunk(ARRAY_POINTER _priorityPosition)
 void VS::Chunk::convertToOptimizedChunk(ARRAY_POINTER _priorityPosition)
 {
 	priorityPosition = _priorityPosition;
-	optimizedChunk = new OptimizedChunk(fullyLoadedChunk);
+	optimizedChunk = new OptimizedChunk(*fullyLoadedChunk);
 	saveState = ChunkSaveState::OptimizedChunk;
 
 }
@@ -68,6 +75,13 @@ void VS::Chunk::convertToFullyLoadedChunk(ARRAY_POINTER _priorityPosition, Fully
 	data->load(optimizedChunk);
 	delete optimizedChunk;
 
+}
+
+VS::Chunk::Chunk(ARRAY_POINTER _priorityPosition, OptimizedChunk* _optimizedChunk)
+{
+	priorityPosition = 69;
+	optimizedChunk = new OptimizedChunk(*_optimizedChunk);
+	saveState = ChunkSaveState::OptimizedChunk;
 }
 
 VS::Chunk::~Chunk()

@@ -19,20 +19,19 @@ VOXEL_TYPE VS::VoxelMemoryPaletteManager::getVoxelID(VoxelData voxel)
 
 		VOXEL_TYPE _currentPaletteID = dataPalettePointer[voxel.blockID][i];
 
-		if (paletteData[_currentPaletteID].voxelData == voxel)
+		if (paletteData[_currentPaletteID] == voxel)
 			return _currentPaletteID;
 	}
 
 	VOXEL_TYPE _voxelPosition = paletteData.size();
-	paletteData.push_back(VoxelPaletteData() = {
-		.voxelData = voxel
-	});
+	paletteData.push_back(voxel);
 	
 	dataPalettePointer[voxel.blockID].push_back(_voxelPosition);
+
 	return _voxelPosition;
 }
 
 VS::VoxelData& VS::VoxelMemoryPaletteManager::getVoxelData(VOXEL_TYPE voxelID)
 {
-	return paletteData[voxelID].voxelData;
+	return paletteData[voxelID];
 }

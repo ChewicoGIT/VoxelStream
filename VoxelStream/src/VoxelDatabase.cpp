@@ -1,6 +1,12 @@
 #include <stdexcept>
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/cereal.hpp>
+#include <fstream>
+
 #include "VoxelStream/VoxelDatabase.h"
 #include "InternalDefinitions.h"
+#include "Serialization/VoxelDatabaseData.h"
+
 #include "Chunk.h"
 #include "FullyLoadedChunk.h"
 #include "ChunkMemoryManager.h"
@@ -12,6 +18,24 @@ VS::VoxelDatabase::VoxelDatabase(VS::DatabaseOptions opt)
 	chunkMemory = new ChunkMemoryManager(opt);
 	voxelPalette = new VoxelMemoryPaletteManager(opt);
 
+}
+
+VS::VoxelDatabase::VoxelDatabase(const char* fileLoaction)
+{
+	VoxelDatabaseData _databaseData;
+
+	{
+		std::ifstream fileStream(fileLoaction, std::ios::binary);
+		cereal::PortableBinaryInputArchive _outputArchive(fileStream);
+		_outputArchive(_databaseData);
+
+	}
+
+	dbOpt = _databaseData.databaseOptions;
+	voxelPalette = _databaseData.paletteData;
+	chunkMemory = new ChunkMemoryManager(dbOpt, _databaseData.optimizedChunks);
+
+	delete[] _databaseData.optimizedChunks;
 }
 
 VS::VoxelDatabase::~VoxelDatabase()
@@ -84,6 +108,43 @@ VS::VoxelData VS::VoxelDatabase::GetVoxel(unsigned int x, unsigned int y, unsign
 	VOXEL_TYPE voxelID = _chunk.getVoxel(VOXEL_ID(relativeX, relativeY, relativeZ));
 
 	return voxelPalette->getVoxelData(voxelID);
+}
+
+void VS::VoxelDatabase::saveData(const char* fileLocation)
+{
+	const int chunkCount = dbOpt.chunkSizeX * dbOpt.chunkSizeY * dbOpt.chunkSizeZ;
+
+	// Constructing
+	VoxelDatabaseData _data{
+		.databaseOptions = dbOpt,
+		.optimizedChunks = nullptr,
+		.paletteData = voxelPalette
+	};
+
+	_data.optimizedChunks = new OptimizedChunk[chunkCount]();
+
+	for (int chunkID = 0; chunkID < chunkCount; chunkID++) {
+		Chunk& _workingChunk = chunkMemory->getChunk(chunkID);
+		switch (_workingChunk.saveState)
+		{
+		case ChunkSaveState::FullyLoadedChunk:
+			_data.optimizedChunks[chunkID] = OptimizedChunk(*_workingChunk.fullyLoadedChunk);
+			break;
+
+		case ChunkSaveState::OptimizedChunk:
+			_data.optimizedChunks[chunkID] = OptimizedChunk(*_workingChunk.optimizedChunk);
+			break;
+		}
+	}
+	
+	{
+		std::ofstream file(fileLocation, std::ios::binary);
+		cereal::PortableBinaryOutputArchive _archive(file);
+
+		_archive(_data);
+	}
+
+	delete[] _data.optimizedChunks;
 }
 
 int VS::VoxelDatabase::getTransformations()

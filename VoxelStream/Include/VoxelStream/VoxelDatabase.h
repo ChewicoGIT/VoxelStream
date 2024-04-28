@@ -7,6 +7,7 @@ namespace VS {
 	{
 	public:
 		VoxelDatabase(DatabaseOptions opt);
+		VoxelDatabase(const char* fileLoaction);
 		// To avoid errors, delete copy constructor
 		VoxelDatabase(const VoxelDatabase& _copy) = delete;
 		~VoxelDatabase();
@@ -16,8 +17,9 @@ namespace VS {
 		/// Be careful because it does not have bound check limit and could cause error
 		VoxelData GetVoxel(unsigned int x, unsigned int y, unsigned int z);
 
-		int getTransformations();
+		void saveData(const char* fileLocation);
 
+		int getTransformations();
 
 	private:
 		DatabaseOptions dbOpt;

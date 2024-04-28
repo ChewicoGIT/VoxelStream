@@ -12,7 +12,9 @@
 
 extern const VS::DatabaseOptions _dbOpt;
 
-extern VS::VoxelDatabase vd;
+extern VS::VoxelDatabase* vd;
 
 void randomAccesBenchMark();
 void weightedBenchmark();
+void saveExample();
+void loadExample();

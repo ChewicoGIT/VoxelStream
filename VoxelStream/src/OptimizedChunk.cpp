@@ -21,27 +21,58 @@ VS::OptimizedChunk::OptimizedChunk()
 	nodes.push_back(Node() = { .voxel = 0, .repetition = VOXEL_X * VOXEL_Y * VOXEL_Z });
 }
 
-VS::OptimizedChunk::OptimizedChunk(FullyLoadedChunk* _fullyLoadedChunk)
+VS::OptimizedChunk::OptimizedChunk(FullyLoadedChunk& _fullyLoadedChunk)
 {
 
 	Node workingNode = {
-		.voxel = _fullyLoadedChunk->voxelData[0],
+		.voxel = _fullyLoadedChunk.voxelData[0],
 		.repetition = 1 };
 
-	nodes = std::vector<Node>(256);
+	nodes = std::vector<Node>();
 
 	for (int x = 1; x < VOXEL_X * VOXEL_Y * VOXEL_Z; x++) {
-		if (_fullyLoadedChunk->voxelData[x] == workingNode.voxel) {
+		if (_fullyLoadedChunk.voxelData[x] == workingNode.voxel) {
 			workingNode.repetition++;
 			continue;
 		}
 
 		nodes.push_back(workingNode);
 
-		workingNode.voxel = _fullyLoadedChunk->voxelData[x];
+		workingNode.voxel = _fullyLoadedChunk.voxelData[x];
 		workingNode.repetition = 1;
 
 	}
+	nodes.push_back(workingNode);
+
+}
+
+VS::OptimizedChunk::OptimizedChunk(OptimizedChunk& _optimizedChunk)
+{
+
+	Node workingNode = {
+		.voxel = _optimizedChunk.nodes[0].voxel,
+		.repetition = _optimizedChunk.nodes[0].repetition};
+
+
+	nodes = std::vector<Node>();
+
+	for (int x = 1; x < _optimizedChunk.nodes.size(); x++) {
+
+		if (_optimizedChunk.nodes[x].repetition == 0)
+			continue;
+
+		if (_optimizedChunk.nodes[x].voxel == workingNode.voxel) {
+			workingNode.repetition += _optimizedChunk.nodes[x].repetition;
+			continue;
+		}
+
+		nodes.push_back(workingNode);
+
+		workingNode.voxel = _optimizedChunk.nodes[x].voxel;
+		workingNode.repetition = _optimizedChunk.nodes[x].repetition;
+
+	}
+
 	nodes.push_back(workingNode);
 
 }

@@ -10,7 +10,8 @@ project "VoxelStream"
    includedirs
    {
       "src",
-	  "Include"
+	  "Include",
+	  "vendor/Cereal1.3.2/include"
    }
 
    targetdir ("../lib/%{cfg.buildcfg}")

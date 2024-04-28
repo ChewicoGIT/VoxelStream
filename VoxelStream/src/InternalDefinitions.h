@@ -16,6 +16,7 @@ namespace VS {
 
 	enum class ChunkSaveState
 	{
+		None,
 		FullyLoadedChunk,
 		OptimizedChunk
 	}; 

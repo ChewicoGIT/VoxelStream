@@ -1,20 +1,24 @@
+#include "Mode.h"
 #include "Common.h"
 
-
 const VS::DatabaseOptions _dbOpt = {
-	.chunkSizeX = 64,
+	.chunkSizeX = 65,
 	.chunkSizeY = 16,
 	.chunkSizeZ = 64,
-	.maxBlockID = 200,
-	.fullyLoadedChunkBufferSize = 64 * 64 + 10,
+	.maxBlockID = 300,
+	.fullyLoadedChunkBufferSize = 64 * 1 * 64 * 1 + 20,
 	.modifiedVoxelPriorityValue = 34,
 	.queryedVoxelPriorityValue = 10
 };
 
-VS::VoxelDatabase vd(_dbOpt);
+VS::VoxelDatabase* vd;
 
 int main() {
-	randomAccesBenchMark();
+
+	saveExample();
+	loadExample();
+
+	//randomAccesBenchMark();
 	//weightedBenchmark();
 
 }

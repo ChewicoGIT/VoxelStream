@@ -12,12 +12,15 @@ namespace VS {
 
 	public:
 		OptimizedChunk();
-		OptimizedChunk(FullyLoadedChunk* _fullyLoadedChunk);
+		OptimizedChunk(FullyLoadedChunk& _fullyLoadedChunk);
+		OptimizedChunk(OptimizedChunk& _optimizedChunk);
 
 		VOXEL_TYPE getVoxel(unsigned short position);
 		void setVoxel(unsigned short position, VOXEL_TYPE _voxel);
 
 		std::vector<Node> nodes;
+
+		
 
 	};
 

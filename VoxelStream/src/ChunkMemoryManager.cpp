@@ -1,7 +1,9 @@
 #include "ChunkMemoryManager.h"
 #include "Chunk.h"
 #include "FullyLoadedChunk.h"
+#include "OptimizedChunk.h"
 #include "InternalDefinitions.h"
+#include <iostream>
 
 VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt)
 {
@@ -40,6 +42,51 @@ VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt)
 	for (int x = 0; x < _optimizedChunksPrioritySize; x++) {
 		optimizedChunksPriority[x] = &chunks[x + _fullyLoadedChunkSize];
 		optimizedChunksPriority[x]->useOptimizedChunk(x);
+
+	}
+
+
+}
+
+VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt, OptimizedChunk* _optimizedChunk)
+{
+
+	dbOpt = _dbOpt;
+
+	unsigned int _chunkQuantity = dbOpt.chunkSizeX * dbOpt.chunkSizeY * dbOpt.chunkSizeZ;
+	unsigned int _fullyLoadedChunkSize = dbOpt.fullyLoadedChunkBufferSize;
+	// We need to be able to store all the chunks for the worst case
+	unsigned int _optimizedChunksPrioritySize = _chunkQuantity - dbOpt.fullyLoadedChunkBufferSize;
+
+	// Chunk array of all chunks
+	chunks = new Chunk[_chunkQuantity];
+	// Priority array of fully loaded
+	fullyLoadedChunksPriority = new FullyLoadedChunkLink[_fullyLoadedChunkSize];
+	// Priority array of optimized
+	optimizedChunksPriority = new Chunk * [_optimizedChunksPrioritySize];
+
+	// Heavy array of raw chunks data
+	fullyLoadedChunks = new FullyLoadedChunk[_fullyLoadedChunkSize];
+
+	// The first ones will be fully loaded
+	for (unsigned int x = 0; x < _fullyLoadedChunkSize; x++) {
+		FullyLoadedChunkLink& _chunkLink = fullyLoadedChunksPriority[x];
+		_chunkLink._chunkData = &fullyLoadedChunks[x];
+
+		// This is to obtain the position in the array of the chunk link
+		unsigned short _chunkLinkPosition = x;
+		chunks[x].initAsOptimizedChunk(&_optimizedChunk[x]);
+		chunks[x].convertToFullyLoadedChunk(_chunkLinkPosition, _chunkLink._chunkData);
+		Chunk* _chunk = &chunks[x];
+
+		_chunkLink._chunk = _chunk;
+
+	}
+
+	// The other ones will be optimized
+	for (int x = 0; x < _optimizedChunksPrioritySize; x++) {
+		chunks[x + _fullyLoadedChunkSize].initAsOptimizedChunk(&_optimizedChunk[x + _fullyLoadedChunkSize]);
+		optimizedChunksPriority[x] = &chunks[x + _fullyLoadedChunkSize];
 
 	}
 

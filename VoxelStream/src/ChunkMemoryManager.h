@@ -8,6 +8,7 @@ namespace VS {
 	{
 	public:
 		ChunkMemoryManager(DatabaseOptions _dbOpt);
+		ChunkMemoryManager(DatabaseOptions _dbOpt, OptimizedChunk* optimizedChunk);
 		~ChunkMemoryManager();
 
 		Chunk& getChunk(unsigned int id);

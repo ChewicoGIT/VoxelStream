@@ -1,7 +1,7 @@
 workspace "VoxelStream"
    architecture "x64"
    configurations { "Debug", "Release"}
-   startproject "VoxelStream"
+   startproject "Test"
 
    -- Workspace-wide build options for MSVC
    filter "system:windows"

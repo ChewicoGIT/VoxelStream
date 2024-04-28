@@ -38,8 +38,8 @@ namespace VS {
 	/// This is the data that is in a voxel, to change the data
 	/// that can be store you have to build the library
 	struct VoxelData {
-		unsigned short blockID;
-		unsigned short blockState;
+		unsigned short blockID = 0;
+		unsigned short blockState = 0;
 
 		inline bool operator == (const VoxelData& _b) const {
 			return _b.blockID == this->blockID &&
