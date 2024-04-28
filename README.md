@@ -48,16 +48,19 @@ VS::VoxelDatabase myVoxelDatabase(_dbOptions);
 ```
 Edit or get a voxel
 ```cpp
-// Edit Voxel
-VS::VoxelData myVoxel {
-	.blockID = _blockID,
-	.blockState = _blockState
-};
+void funct(){
+    // Edit Voxel
+    VS::VoxelData myVoxel {
+    	.blockID = _blockID,
+    	.blockState = _blockState
+    };
 
-myVoxelDatabase.SetVoxel(_posX, _posY, _posZ, myVoxel);
+    myVoxelDatabase.SetVoxel(_posX, _posY, _posZ, myVoxel);
 
-// Get Voxel
-myVoxel = vd.GetVoxel(randomX, randomY, randomZ);
+    // Get Voxel
+    myVoxel = vd.GetVoxel(randomX, randomY, randomZ);
+    
+}
 ```
 ## Build
 This project uses Premake, it is very easy to use just look up the documentation 
