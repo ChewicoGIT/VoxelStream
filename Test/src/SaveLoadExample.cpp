@@ -7,13 +7,13 @@ void saveExample() {
 	time_t randomSeed = time(NULL);
 
 	srand(5);
-
+	int lastX = 0;
 	auto start = std::chrono::high_resolution_clock::now();
 	for (int x = 0; x < MAX_ITIRENATIONS; x++) {
 
-		int randomX = rand() % (64 * 1 * 32);
+		int randomX = x / (2048);
 		int randomY = rand() % (16 * 1 * 32);
-		int randomZ = rand() % (64 * 1 * 32);
+		int randomZ = rand() % (5 * 1 * 32);
 
 		unsigned short randomVoxel = rand() % 200;
 		unsigned short randomStat = rand() % 200;
@@ -23,6 +23,11 @@ void saveExample() {
 			.blockState = randomStat
 			});
 
+		if (lastX / 100 != randomX / 100)
+		{
+			lastX = randomX;
+			std::cout << lastX << " - t : " << vd->getTransformations() << " : fl : " << vd->objectWasFullyLoaded() << "\n ";
+		}
 
 
 	}
@@ -33,10 +38,17 @@ void saveExample() {
 	std::cout << "Time taken: " << duration.count() << " milliseconds" << "\n";
 	std::cout << "\n";
 
+
+	start = std::chrono::high_resolution_clock::now();
+	end = std::chrono::high_resolution_clock::now();
+	duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+	std::cout << "Finished saving \n";
+	std::cout << "Time taken: " << duration.count() << " milliseconds" << "\n";
+	std::cout << "\n";
+
 	vd->saveData("voxels.bin");
 	std::cout << "Saved in voxels.bin" << "\n";
 	delete vd;
-	getchar();
 
 }
 
@@ -46,17 +58,31 @@ void saveExample() {
 void loadExample() {
 
 
+	std::cout << " Loading... \n";
+	auto _start = std::chrono::high_resolution_clock::now();
 	vd = new VS::VoxelDatabase("voxels.bin");
+
+	auto _end = std::chrono::high_resolution_clock::now();
+	auto _duration = std::chrono::duration_cast<std::chrono::milliseconds>(_end - _start);
+	std::cout << "Loaded finished \n";
+	std::cout << "Time taken: " << _duration.count() << " milliseconds" << std::endl;
 
 	srand(5);
 
 	int collisionOrError = 0;
-	auto _start = std::chrono::high_resolution_clock::now();
+	_start = std::chrono::high_resolution_clock::now();
+	int lastX = 0;
 	for (int x = 0; x < MAX_ITIRENATIONS; x++) {
 
-		int randomX = rand() % (64 * 1 * 32);
+		int randomX = x / (2048);
 		int randomY = rand() % (16 * 1 * 32);
-		int randomZ = rand() % (64 * 1 * 32);
+		int randomZ = rand() % (5 * 1 * 32);
+
+		if (lastX / 100 != randomX / 100)
+		{
+			lastX = randomX;
+			std::cout << lastX << " - t : " << vd->getTransformations() << " : fl : " << vd->objectWasFullyLoaded() << "\n ";
+		}
 
 		unsigned short randomVoxel = rand() % 200;
 		unsigned short randomStat = rand() % 200;
@@ -68,8 +94,8 @@ void loadExample() {
 		}
 	}
 
-	auto _end = std::chrono::high_resolution_clock::now();
-	auto _duration = std::chrono::duration_cast<std::chrono::milliseconds>(_end - _start);
+	_end = std::chrono::high_resolution_clock::now();
+	_duration = std::chrono::duration_cast<std::chrono::milliseconds>(_end - _start);
 	std::cout << "Finished reading \n";
 	std::cout << "Time taken: " << _duration.count() << " milliseconds" << std::endl;
 

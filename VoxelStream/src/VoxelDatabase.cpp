@@ -105,7 +105,11 @@ VS::VoxelData VS::VoxelDatabase::GetVoxel(unsigned int x, unsigned int y, unsign
 	for (int x = 0; x < dbOpt.queryedVoxelPriorityValue; x++)
 		chunkMemory->incrementPriority(_chunk);
 
+	if (_chunk.saveState == ChunkSaveState::FullyLoadedChunk)
+		_objectWasFullyLoaded++;
+
 	VOXEL_TYPE voxelID = _chunk.getVoxel(VOXEL_ID(relativeX, relativeY, relativeZ));
+
 
 	return voxelPalette->getVoxelData(voxelID);
 }
@@ -149,5 +153,14 @@ void VS::VoxelDatabase::saveData(const char* fileLocation)
 
 int VS::VoxelDatabase::getTransformations()
 {
-	return chunkMemory->transformations;
+	int tempValue = chunkMemory->transformations;
+	chunkMemory->transformations = 0;
+	return tempValue;
+}
+
+int VS::VoxelDatabase::objectWasFullyLoaded()
+{
+	int tempValue = _objectWasFullyLoaded;
+	_objectWasFullyLoaded = 0;
+	return tempValue;
 }

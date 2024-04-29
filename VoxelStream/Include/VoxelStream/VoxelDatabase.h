@@ -20,12 +20,13 @@ namespace VS {
 		void saveData(const char* fileLocation);
 
 		int getTransformations();
+		int objectWasFullyLoaded();
 
 	private:
 		DatabaseOptions dbOpt;
 		ChunkMemoryManager* chunkMemory;
 		VoxelMemoryPaletteManager* voxelPalette;
-
+		int _objectWasFullyLoaded = 0;
 
 	};
 

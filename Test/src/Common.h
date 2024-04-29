@@ -8,7 +8,8 @@
 #include "VoxelStream/DataStructures.h"
 #include "VoxelStream/VoxelDatabase.h"
 
-#define MAX_ITIRENATIONS 1000000
+#define MAX_ITIRENATIONS 4000000
+
 
 extern const VS::DatabaseOptions _dbOpt;
 
