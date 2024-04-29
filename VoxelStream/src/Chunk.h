@@ -8,7 +8,7 @@ namespace VS {
 	public:
 		Chunk() = default;
 		Chunk(Chunk& _chnk) = delete;
-		Chunk(ARRAY_POINTER _priorityPosition, OptimizedChunk* _optimizedChunk);
+		Chunk(BIG_ARRAY_POINTER _priorityPosition, OptimizedChunk* _optimizedChunk);
 		~Chunk();
 
 		VOXEL_TYPE getVoxel(unsigned short voxelID);
@@ -16,15 +16,15 @@ namespace VS {
 
 		ChunkSaveState saveState = ChunkSaveState::None;
 		// We don't know which array it is, only if we search for the save state
-		ARRAY_POINTER priorityPosition;
+		BIG_ARRAY_POINTER priorityPosition;
 
-		void initAsOptimizedChunk(OptimizedChunk* _optimizedChunk);
+		void initAsOptimizedChunk(BIG_ARRAY_POINTER _priorityPosition, OptimizedChunk* _optimizedChunk);
 
-		void useFullyLoadedChunk(FullyLoadedChunk* _fullyLoadedChunk, ARRAY_POINTER _priorityPosition);
-		void useOptimizedChunk(ARRAY_POINTER _priorityPosition);
+		void useFullyLoadedChunk(FullyLoadedChunk* _fullyLoadedChunk, BIG_ARRAY_POINTER _priorityPosition);
+		void useOptimizedChunk(BIG_ARRAY_POINTER _priorityPosition);
 
-		void convertToOptimizedChunk(ARRAY_POINTER _priorityPosition);
-		void convertToFullyLoadedChunk(ARRAY_POINTER _priorityPosition, FullyLoadedChunk* data);
+		void convertToOptimizedChunk(BIG_ARRAY_POINTER _priorityPosition);
+		void convertToFullyLoadedChunk(BIG_ARRAY_POINTER _priorityPosition, FullyLoadedChunk* data);
 
 		// Only in case it is a optimizedChunk
 		OptimizedChunk* optimizedChunk;

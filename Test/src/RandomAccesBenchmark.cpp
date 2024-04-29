@@ -59,6 +59,4 @@ void randomAccesBenchMark() {
 
 	std::cout << "Collision errors : " << collisionOrError;
 
-	getchar();
-
 }

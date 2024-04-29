@@ -2,8 +2,8 @@
 #include "VoxelStream/DataStructures.h"
 
 VS::VoxelMemoryPaletteManager::VoxelMemoryPaletteManager(DatabaseOptions _dbOpt)
+	:dbOpt(_dbOpt)
 {
-	dbOpt = _dbOpt;
 	dataPalettePointer = new std::vector<VOXEL_TYPE>[dbOpt.maxBlockID]();
 
 	getVoxelID(VoxelData() = {

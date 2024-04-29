@@ -36,13 +36,14 @@ void VS::Chunk::modifyVoxel(unsigned short voxelID, VOXEL_TYPE _voxel)
 	}
 }
 
-void VS::Chunk::initAsOptimizedChunk(OptimizedChunk* _optimizedChunk)
+void VS::Chunk::initAsOptimizedChunk(BIG_ARRAY_POINTER _priorityPosition, OptimizedChunk* _optimizedChunk)
 {
 	optimizedChunk = new OptimizedChunk(*_optimizedChunk);
+	priorityPosition = _priorityPosition;
 	saveState = ChunkSaveState::OptimizedChunk;
 }
 
-void VS::Chunk::useFullyLoadedChunk(FullyLoadedChunk* _fullyLoadedChunk, ARRAY_POINTER _priorityPosition)
+void VS::Chunk::useFullyLoadedChunk(FullyLoadedChunk* _fullyLoadedChunk, BIG_ARRAY_POINTER _priorityPosition)
 {
 	fullyLoadedChunk = _fullyLoadedChunk;
 
@@ -51,14 +52,14 @@ void VS::Chunk::useFullyLoadedChunk(FullyLoadedChunk* _fullyLoadedChunk, ARRAY_P
 	
 }
 
-void VS::Chunk::useOptimizedChunk(ARRAY_POINTER _priorityPosition)
+void VS::Chunk::useOptimizedChunk(BIG_ARRAY_POINTER _priorityPosition)
 {
 	priorityPosition = _priorityPosition;
 	optimizedChunk = new OptimizedChunk();
 	saveState = ChunkSaveState::OptimizedChunk;
 }
 
-void VS::Chunk::convertToOptimizedChunk(ARRAY_POINTER _priorityPosition)
+void VS::Chunk::convertToOptimizedChunk(BIG_ARRAY_POINTER _priorityPosition)
 {
 	priorityPosition = _priorityPosition;
 	optimizedChunk = new OptimizedChunk(*fullyLoadedChunk);
@@ -66,7 +67,7 @@ void VS::Chunk::convertToOptimizedChunk(ARRAY_POINTER _priorityPosition)
 
 }
 
-void VS::Chunk::convertToFullyLoadedChunk(ARRAY_POINTER _priorityPosition, FullyLoadedChunk* data)
+void VS::Chunk::convertToFullyLoadedChunk(BIG_ARRAY_POINTER _priorityPosition, FullyLoadedChunk* data)
 {
 	fullyLoadedChunk = data;
 	priorityPosition = _priorityPosition;
@@ -77,7 +78,7 @@ void VS::Chunk::convertToFullyLoadedChunk(ARRAY_POINTER _priorityPosition, Fully
 
 }
 
-VS::Chunk::Chunk(ARRAY_POINTER _priorityPosition, OptimizedChunk* _optimizedChunk)
+VS::Chunk::Chunk(BIG_ARRAY_POINTER _priorityPosition, OptimizedChunk* _optimizedChunk)
 {
 	priorityPosition = 69;
 	optimizedChunk = new OptimizedChunk(*_optimizedChunk);

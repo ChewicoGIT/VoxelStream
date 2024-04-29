@@ -6,8 +6,8 @@
 #include <iostream>
 
 VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt)
+	:dbOpt(_dbOpt)
 {
-	dbOpt = _dbOpt;
 
 	unsigned int _chunkQuantity = dbOpt.chunkSizeX * dbOpt.chunkSizeY * dbOpt.chunkSizeZ;
 	unsigned int _fullyLoadedChunkSize = dbOpt.fullyLoadedChunkBufferSize;
@@ -30,7 +30,7 @@ VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt)
 		_chunkLink._chunkData = &fullyLoadedChunks[x];
 
 		// This is to obtain the position in the array of the chunk link
-		unsigned short _chunkLinkPosition = x;
+		BIG_ARRAY_POINTER _chunkLinkPosition = x;
 		chunks[x].useFullyLoadedChunk(_chunkLink._chunkData, _chunkLinkPosition);
 		Chunk* _chunk = &chunks[x];
 
@@ -49,9 +49,8 @@ VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt)
 }
 
 VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt, OptimizedChunk* _optimizedChunk)
+	: dbOpt(_dbOpt)
 {
-
-	dbOpt = _dbOpt;
 
 	unsigned int _chunkQuantity = dbOpt.chunkSizeX * dbOpt.chunkSizeY * dbOpt.chunkSizeZ;
 	unsigned int _fullyLoadedChunkSize = dbOpt.fullyLoadedChunkBufferSize;
@@ -74,8 +73,8 @@ VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt, OptimizedChun
 		_chunkLink._chunkData = &fullyLoadedChunks[x];
 
 		// This is to obtain the position in the array of the chunk link
-		unsigned short _chunkLinkPosition = x;
-		chunks[x].initAsOptimizedChunk(&_optimizedChunk[x]);
+		BIG_ARRAY_POINTER _chunkLinkPosition = x;
+		chunks[x].initAsOptimizedChunk(0, &_optimizedChunk[x]);
 		chunks[x].convertToFullyLoadedChunk(_chunkLinkPosition, _chunkLink._chunkData);
 		Chunk* _chunk = &chunks[x];
 
@@ -85,7 +84,7 @@ VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt, OptimizedChun
 
 	// The other ones will be optimized
 	for (int x = 0; x < _optimizedChunksPrioritySize; x++) {
-		chunks[x + _fullyLoadedChunkSize].initAsOptimizedChunk(&_optimizedChunk[x + _fullyLoadedChunkSize]);
+		chunks[x + _fullyLoadedChunkSize].initAsOptimizedChunk(x, &_optimizedChunk[x + _fullyLoadedChunkSize]);
 		optimizedChunksPriority[x] = &chunks[x + _fullyLoadedChunkSize];
 
 	}
@@ -108,8 +107,8 @@ VS::Chunk& VS::ChunkMemoryManager::getChunk(unsigned int id)
 
 void VS::ChunkMemoryManager::incrementPriority(Chunk& _chunk)
 {
-	ARRAY_POINTER _oldPosition;
-	ARRAY_POINTER _nextPosition;
+	BIG_ARRAY_POINTER _oldPosition;
+	BIG_ARRAY_POINTER _nextPosition;
 
 	FullyLoadedChunkLink _chunkLink;
 	FullyLoadedChunkLink _frontChunkLink;

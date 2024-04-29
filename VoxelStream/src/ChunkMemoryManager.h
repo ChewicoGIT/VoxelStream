@@ -16,7 +16,7 @@ namespace VS {
 
 		int transformations = 0;
 	private:
-		DatabaseOptions dbOpt;
+		const DatabaseOptions dbOpt;
 
 		/// This is a list that stores the chunks
 		Chunk* chunks;

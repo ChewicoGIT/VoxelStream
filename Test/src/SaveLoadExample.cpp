@@ -11,7 +11,7 @@ void saveExample() {
 	auto start = std::chrono::high_resolution_clock::now();
 	for (int x = 0; x < MAX_ITIRENATIONS; x++) {
 
-		int randomX = x / (2048);
+		int randomX = 32 * 60;
 		int randomY = rand() % (16 * 1 * 32);
 		int randomZ = rand() % (5 * 1 * 32);
 
@@ -23,11 +23,11 @@ void saveExample() {
 			.blockState = randomStat
 			});
 
-		if (lastX / 100 != randomX / 100)
-		{
-			lastX = randomX;
-			std::cout << lastX << " - t : " << vd->getTransformations() << " : fl : " << vd->objectWasFullyLoaded() << "\n ";
-		}
+		//if (lastX / 16 != randomX / 16)
+		//{
+		//	lastX = randomX;
+		//	std::cout << lastX << " - t : " << vd->getTransformations() << " : fl : " << ((float)vd->objectWasFullyLoaded() / (float)(2048 * 16) * 100) << "\n ";
+		//}
 
 
 	}
@@ -74,15 +74,16 @@ void loadExample() {
 	int lastX = 0;
 	for (int x = 0; x < MAX_ITIRENATIONS; x++) {
 
-		int randomX = x / (2048);
+		int randomX = 32 * 60;
 		int randomY = rand() % (16 * 1 * 32);
 		int randomZ = rand() % (5 * 1 * 32);
 
-		if (lastX / 100 != randomX / 100)
-		{
-			lastX = randomX;
-			std::cout << lastX << " - t : " << vd->getTransformations() << " : fl : " << vd->objectWasFullyLoaded() << "\n ";
-		}
+
+		//if (lastX / 16 != randomX / 16)
+		//{
+		//	lastX = randomX;
+		//	std::cout << lastX << " - t : " << vd->getTransformations() << " : fl : " << ((float)vd->objectWasFullyLoaded() / (float)(2048)) << "\n ";
+		//}
 
 		unsigned short randomVoxel = rand() % 200;
 		unsigned short randomStat = rand() % 200;

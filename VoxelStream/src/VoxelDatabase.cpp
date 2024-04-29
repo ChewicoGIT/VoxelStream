@@ -13,8 +13,8 @@
 #include "VoxelMemoryPaletteManager.h"
 
 VS::VoxelDatabase::VoxelDatabase(VS::DatabaseOptions opt)
+	: dbOpt(opt)
 {
-	dbOpt = opt;
 	chunkMemory = new ChunkMemoryManager(opt);
 	voxelPalette = new VoxelMemoryPaletteManager(opt);
 
@@ -72,8 +72,16 @@ void VS::VoxelDatabase::SetVoxel(unsigned int x, unsigned int y, unsigned int z,
 
 	Chunk& _chunk = chunkMemory->getChunk(chunkID);
 
-	for(int x = 0; x < dbOpt.modifiedVoxelPriorityValue; x++)
+	// Calculate a number to increase priority, if the chunk is near the 0 it is not
+	// necessary a big amount but if it is in the last pos it needs a lot
+	int _chunkAbsolutePosition = _chunk.priorityPosition + (_chunk.saveState == ChunkSaveState::FullyLoadedChunk) ? dbOpt.fullyLoadedChunkBufferSize : 0;
+	int incrementPriority = (_chunkAbsolutePosition * dbOpt.modifiedVoxelPriorityValue / (dbOpt.chunkSizeX * dbOpt.chunkSizeY * dbOpt.chunkSizeZ)) + 1;
+
+	for (int x = 0; x < incrementPriority; x++)
 		chunkMemory->incrementPriority(_chunk);
+
+	if (_chunk.saveState == ChunkSaveState::FullyLoadedChunk)
+		_objectWasFullyLoaded++;
 
 	_chunk.modifyVoxel(VOXEL_ID(relativeX, relativeY, relativeZ), _voxel);
 
@@ -102,7 +110,13 @@ VS::VoxelData VS::VoxelDatabase::GetVoxel(unsigned int x, unsigned int y, unsign
 	unsigned int relativeZ = z & 31;
 
 	Chunk& _chunk = chunkMemory->getChunk(chunkID);
-	for (int x = 0; x < dbOpt.queryedVoxelPriorityValue; x++)
+
+	// Calculate a number to increase priority, if the chunk is near the 0 it is not
+	// necessary a big amount but if it is in the last pos it needs a lot
+	int _chunkAbsolutePosition = _chunk.priorityPosition + (_chunk.saveState == ChunkSaveState::FullyLoadedChunk) ? dbOpt.fullyLoadedChunkBufferSize : 0;
+	int incrementPriority = (_chunkAbsolutePosition * dbOpt.queryedVoxelPriorityValue / (dbOpt.chunkSizeX * dbOpt.chunkSizeY * dbOpt.chunkSizeZ)) + 1;
+
+	for (int x = 0; x < incrementPriority; x++)
 		chunkMemory->incrementPriority(_chunk);
 
 	if (_chunk.saveState == ChunkSaveState::FullyLoadedChunk)

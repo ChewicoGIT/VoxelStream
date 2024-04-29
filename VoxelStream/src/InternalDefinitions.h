@@ -6,6 +6,7 @@
 
 #define VOXEL_TYPE unsigned short
 #define ARRAY_POINTER unsigned short
+#define BIG_ARRAY_POINTER unsigned int
 
 #define VOXEL_ID(x, y, z) x + y * VOXEL_X + z * VOXEL_X * VOXEL_Y 
 
