@@ -17,9 +17,9 @@ void randomAccesBenchMark() {
 			unsigned short randomVoxel = rand() % 200;
 			unsigned short randomStat = rand() % 200;
 
-			vd->SetVoxel(randomX, randomY, randomZ, VS::VoxelData() = {
-				.blockID = randomVoxel,
-				.blockState = randomStat
+			vd->SetVoxel(randomX, randomY, randomZ, VS::VoxelData{
+					.blockID = randomVoxel,
+					.lightInfo = randomStat
 				});
 
 
@@ -48,7 +48,7 @@ void randomAccesBenchMark() {
 		unsigned short randomStat = rand() % 200;
 		VS::VoxelData voxel = vd->GetVoxel(randomX, randomY, randomZ);
 
-		if (voxel.blockID != randomVoxel || voxel.blockState != randomStat) {
+		if (voxel.blockID != randomVoxel || voxel.lightInfo != randomStat) {
 			collisionOrError++;
 		}
 	}

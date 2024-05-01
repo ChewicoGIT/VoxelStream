@@ -4,24 +4,20 @@
 
 namespace VS {
 	struct Node {
-		VOXEL_TYPE voxel;
+		VoxelData voxel;
 		unsigned short repetition;
 	};
 
 	class OptimizedChunk {
-
 	public:
+		std::vector<Node> nodes;
+
 		OptimizedChunk();
 		OptimizedChunk(FullyLoadedChunk& _fullyLoadedChunk);
 		OptimizedChunk(OptimizedChunk& _optimizedChunk);
 
-		VOXEL_TYPE getVoxel(unsigned short position);
-		void setVoxel(unsigned short position, VOXEL_TYPE _voxel);
-
-		std::vector<Node> nodes;
-
-		
-
+		VoxelData getVoxel(ARRAY_POINTER position);
+		void setVoxel(unsigned short position, VoxelData _voxel);
 	};
 
 }

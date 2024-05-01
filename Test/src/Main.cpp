@@ -16,6 +16,7 @@ VS::VoxelDatabase* vd;
 int main() {
 
 	saveExample();
+	
 	loadExample();
 	 
 	//randomAccesBenchMark();

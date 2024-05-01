@@ -25,7 +25,6 @@ namespace VS {
 	private:
 		DatabaseOptions dbOpt;
 		ChunkMemoryManager* chunkMemory;
-		VoxelMemoryPaletteManager* voxelPalette;
 		int _objectWasFullyLoaded = 0;
 
 	};

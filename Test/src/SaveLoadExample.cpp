@@ -11,16 +11,16 @@ void saveExample() {
 	auto start = std::chrono::high_resolution_clock::now();
 	for (int x = 0; x < MAX_ITIRENATIONS; x++) {
 
-		int randomX = 32 * 60;
+		int randomX = x / 2024;
 		int randomY = rand() % (16 * 1 * 32);
 		int randomZ = rand() % (5 * 1 * 32);
 
 		unsigned short randomVoxel = rand() % 200;
 		unsigned short randomStat = rand() % 200;
 
-		vd->SetVoxel(randomX, randomY, randomZ, VS::VoxelData() = {
+		vd->SetVoxel(randomX, randomY, randomZ, VS::VoxelData{
 			.blockID = randomVoxel,
-			.blockState = randomStat
+			.lightInfo = randomStat
 			});
 
 		//if (lastX / 16 != randomX / 16)
@@ -38,6 +38,7 @@ void saveExample() {
 	std::cout << "Time taken: " << duration.count() << " milliseconds" << "\n";
 	std::cout << "\n";
 
+	getchar();
 
 	start = std::chrono::high_resolution_clock::now();
 	end = std::chrono::high_resolution_clock::now();
@@ -74,23 +75,16 @@ void loadExample() {
 	int lastX = 0;
 	for (int x = 0; x < MAX_ITIRENATIONS; x++) {
 
-		int randomX = 32 * 60;
+		int randomX = x / 2024;
 		int randomY = rand() % (16 * 1 * 32);
 		int randomZ = rand() % (5 * 1 * 32);
-
-
-		//if (lastX / 16 != randomX / 16)
-		//{
-		//	lastX = randomX;
-		//	std::cout << lastX << " - t : " << vd->getTransformations() << " : fl : " << ((float)vd->objectWasFullyLoaded() / (float)(2048)) << "\n ";
-		//}
 
 		unsigned short randomVoxel = rand() % 200;
 		unsigned short randomStat = rand() % 200;
 
 		VS::VoxelData voxel = vd->GetVoxel(randomX, randomY, randomZ);
 
-		if (voxel.blockID != randomVoxel || voxel.blockState != randomStat) {
+		if (voxel.blockID != randomVoxel || voxel.lightInfo != randomStat) {
 			collisionOrError++;
 		}
 	}

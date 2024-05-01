@@ -1,7 +1,7 @@
 #include "OptimizedChunk.h"
 #include "FullyLoadedChunk.h"
 
-VOXEL_TYPE VS::OptimizedChunk::getVoxel(unsigned short position)
+VS::VoxelData VS::OptimizedChunk::getVoxel(ARRAY_POINTER position)
 {
 	int currentID = 0;
 
@@ -13,7 +13,7 @@ VOXEL_TYPE VS::OptimizedChunk::getVoxel(unsigned short position)
 
 	}
 
-	return 0;
+	return VoxelData();
 }
 
 VS::OptimizedChunk::OptimizedChunk()
@@ -77,7 +77,7 @@ VS::OptimizedChunk::OptimizedChunk(OptimizedChunk& _optimizedChunk)
 
 }
 
-void VS::OptimizedChunk::setVoxel(unsigned short position, VOXEL_TYPE _voxel)
+void VS::OptimizedChunk::setVoxel(unsigned short position, VoxelData _voxel)
 {
 
 	int listID = 0;
@@ -180,7 +180,7 @@ void VS::OptimizedChunk::setVoxel(unsigned short position, VOXEL_TYPE _voxel)
 		// Ok so this line cost me 3h of debuggin because instead of caching and then asign .voxel = _tempVoxel
 		// i used Node{ .voxel = _node.voxel, .repetition = _endNodeSize } witch is incorrect because at the moment
 		// you insert a node in the vector it invalidates any reference to the itirenator so giving random numbers.
-		VOXEL_TYPE _tempVoxel = _node.voxel;
+		VoxelData _tempVoxel = _node.voxel;
  
  		_node.repetition = relativePosition;
  		nodes.insert(nodes.begin() + listID + 1, Node{ .voxel = _voxel, .repetition = 1 });

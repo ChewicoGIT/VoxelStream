@@ -1,12 +1,11 @@
 #pragma once
+#include "VoxelStream/DataStructures.h"
 
 #define VOXEL_X 32
 #define VOXEL_Y 32
 #define VOXEL_Z 32
 
-#define VOXEL_TYPE unsigned short
 #define ARRAY_POINTER unsigned short
-#define BIG_ARRAY_POINTER unsigned int
 
 #define VOXEL_ID(x, y, z) x + y * VOXEL_X + z * VOXEL_X * VOXEL_Y 
 
@@ -14,7 +13,7 @@ namespace VS {
 	class Chunk;
 	class FullyLoadedChunk;
 	class OptimizedChunk;
-
+	
 	enum class ChunkSaveState
 	{
 		None,

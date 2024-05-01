@@ -5,7 +5,7 @@
 VS::FullyLoadedChunk::FullyLoadedChunk()
 {
 	for (int x = 0; x < VOXEL_X * VOXEL_Y * VOXEL_Z; x++)
-		voxelData[x] = 0;
+		voxelData[x] = VoxelData();
 
 }
 

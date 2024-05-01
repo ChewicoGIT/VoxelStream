@@ -1,11 +1,10 @@
 #pragma once
 #include "VoxelStream/DataStructures.h"
 #include "OptimizedChunk.h"
-#include "VoxelMemoryPaletteManager.h"
 #include <cereal/types/vector.hpp>
 
 namespace VS {
-
+	
 	template<class Archive>
 	void serialize(Archive& archive,
 		VS::Node & _node)
@@ -21,56 +20,16 @@ namespace VS {
 	}
 	
 	template<class Archive>
-	void serialize(Archive& archive, VoxelData& _voxelData) {
-		archive(_voxelData.blockID);
-		archive(_voxelData.blockState);
-	
-	}
-	
-	template<class Archive>
-	void save(Archive& archive, VoxelMemoryPaletteManager const& _palette) {
-	
-		archive(_palette.paletteData);
-	
-		for (int x = 0; x < _palette.dbOpt.maxBlockID; x++)
-			archive(_palette.dataPalettePointer[x]);
-	
-	}
-	
-	template<class Archive>
-	void load(Archive& archive, VoxelMemoryPaletteManager& _palette) {
-	
-		archive(_palette.paletteData);
-	
-		_palette.dataPalettePointer = new std::vector<VOXEL_TYPE>[_palette.dbOpt.maxBlockID];
-		for (int x = 0; x < _palette.dbOpt.maxBlockID; x++)
-			archive(_palette.dataPalettePointer[x]);
-	
-	}
+	void serialize(Archive& archive, DatabaseOptions& _databaseOptions) {
 
-	template<class Archive>
-	void save(Archive& archive, DatabaseOptions const& _databaseOptions) {
+		archive(_databaseOptions.chunkSizeX, 
+			_databaseOptions.chunkSizeY,
+			_databaseOptions.chunkSizeZ,
+			_databaseOptions.fullyLoadedChunkBufferSize,
+			_databaseOptions.maxBlockID,
+			_databaseOptions.modifiedVoxelPriorityValue,
+			_databaseOptions.queryedVoxelPriorityValue);
 
-		archive(_databaseOptions.chunkSizeX);
-		archive(_databaseOptions.chunkSizeY);
-		archive(_databaseOptions.chunkSizeZ);
-		archive(_databaseOptions.fullyLoadedChunkBufferSize);
-		archive(_databaseOptions.maxBlockID);
-		archive(_databaseOptions.modifiedVoxelPriorityValue);
-		archive(_databaseOptions.queryedVoxelPriorityValue);
-
-	}
-	template<class Archive>
-	void load(Archive& archive, DatabaseOptions& _databaseOptions) {
-	
-		archive(_databaseOptions.chunkSizeX);
-		archive(_databaseOptions.chunkSizeY);
-		archive(_databaseOptions.chunkSizeZ);
-		archive(_databaseOptions.fullyLoadedChunkBufferSize);
-		archive(_databaseOptions.maxBlockID);
-		archive(_databaseOptions.modifiedVoxelPriorityValue);
-		archive(_databaseOptions.queryedVoxelPriorityValue);
-	
 	}
 
 }

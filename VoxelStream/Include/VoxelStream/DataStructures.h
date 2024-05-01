@@ -1,12 +1,10 @@
 #pragma once
+#include <cstdint>
 
 namespace VS {
-	
 	class ChunkMemoryManager;
-	class VoxelMemoryPaletteManager;
 
 	struct DatabaseOptions {
-		
 		/// Chunk sizes defines the amount of voxels
 		/// in each direction. Keep in mind that a chunk
 		/// has 32 voxels in each direction so for example
@@ -32,19 +30,25 @@ namespace VS {
 		/// This is the amount of numbers that a chunk fowards
 		/// when a voxel is obtained
 		unsigned int queryedVoxelPriorityValue = 1;
-
 	};
 
 	/// This is the data that is in a voxel, to change the data
 	/// that can be store you have to build the library
 	struct VoxelData {
-		unsigned short blockID = 0;
-		unsigned short blockState = 0;
+		uint16_t blockID = 0;
+		uint16_t lightInfo = 0;
 
 		inline bool operator == (const VoxelData& _b) const {
 			return _b.blockID == this->blockID &&
-				_b.blockState == this->blockState;
+				_b.lightInfo == this->lightInfo;
 		}
 
+		// This is a function to serialize the data, if you change voxel Data
+		// add it here to avoid breaking the save
+		template<class Archive>
+		void serialize(Archive& archive)
+		{
+			archive(blockID, lightInfo);
+		}
 	};
 }

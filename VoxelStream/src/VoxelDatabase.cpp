@@ -10,13 +10,11 @@
 #include "Chunk.h"
 #include "FullyLoadedChunk.h"
 #include "ChunkMemoryManager.h"
-#include "VoxelMemoryPaletteManager.h"
 
 VS::VoxelDatabase::VoxelDatabase(VS::DatabaseOptions opt)
 	: dbOpt(opt)
 {
 	chunkMemory = new ChunkMemoryManager(opt);
-	voxelPalette = new VoxelMemoryPaletteManager(opt);
 
 }
 
@@ -32,7 +30,6 @@ VS::VoxelDatabase::VoxelDatabase(const char* fileLoaction)
 	}
 
 	dbOpt = _databaseData.databaseOptions;
-	voxelPalette = _databaseData.paletteData;
 	chunkMemory = new ChunkMemoryManager(dbOpt, _databaseData.optimizedChunks);
 
 	delete[] _databaseData.optimizedChunks;
@@ -41,7 +38,6 @@ VS::VoxelDatabase::VoxelDatabase(const char* fileLoaction)
 VS::VoxelDatabase::~VoxelDatabase()
 {
 	delete chunkMemory;
-	delete voxelPalette;
 
 }
 
@@ -54,9 +50,6 @@ void VS::VoxelDatabase::SetVoxel(unsigned int x, unsigned int y, unsigned int z,
 		z < 0 || z >= dbOpt.chunkSizeZ * 32)
 		throw std::invalid_argument("Voxel position out of bounds");
 #endif
-
-	//Gets the id of the voxel type
-	VOXEL_TYPE _voxel = voxelPalette->getVoxelID(voxelData);
 
 	//This is the most efficient way of dividing by 32 (0b_0010_0000)
 	unsigned int chunkID_X = x >> 5;
@@ -83,7 +76,7 @@ void VS::VoxelDatabase::SetVoxel(unsigned int x, unsigned int y, unsigned int z,
 	if (_chunk.saveState == ChunkSaveState::FullyLoadedChunk)
 		_objectWasFullyLoaded++;
 
-	_chunk.modifyVoxel(VOXEL_ID(relativeX, relativeY, relativeZ), _voxel);
+	_chunk.setVoxel(VOXEL_ID(relativeX, relativeY, relativeZ), voxelData);
 
 }
 
@@ -122,10 +115,7 @@ VS::VoxelData VS::VoxelDatabase::GetVoxel(unsigned int x, unsigned int y, unsign
 	if (_chunk.saveState == ChunkSaveState::FullyLoadedChunk)
 		_objectWasFullyLoaded++;
 
-	VOXEL_TYPE voxelID = _chunk.getVoxel(VOXEL_ID(relativeX, relativeY, relativeZ));
-
-
-	return voxelPalette->getVoxelData(voxelID);
+	return _chunk.getVoxel(VOXEL_ID(relativeX, relativeY, relativeZ));
 }
 
 void VS::VoxelDatabase::saveData(const char* fileLocation)
@@ -135,8 +125,7 @@ void VS::VoxelDatabase::saveData(const char* fileLocation)
 	// Constructing
 	VoxelDatabaseData _data{
 		.databaseOptions = dbOpt,
-		.optimizedChunks = nullptr,
-		.paletteData = voxelPalette
+		.optimizedChunks = nullptr
 	};
 
 	_data.optimizedChunks = new OptimizedChunk[chunkCount]();
