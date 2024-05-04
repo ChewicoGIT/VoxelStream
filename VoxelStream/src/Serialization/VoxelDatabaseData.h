@@ -9,6 +9,7 @@ namespace VS {
 	struct VoxelDatabaseData {
 		DatabaseOptions databaseOptions;
 		OptimizedChunk* optimizedChunks;
+		unsigned short* chunkPriorityOrder;
 
 		template<class Archive>
 		void save(Archive& archive) const
@@ -20,6 +21,9 @@ namespace VS {
 			
 			for (int x = 0; x < chunkCount; x++)
 				archive(optimizedChunks[x]);
+
+			for (int x = 0; x < chunkCount; x++)
+				archive(chunkPriorityOrder[x]);
 			
 		}
 
@@ -32,8 +36,13 @@ namespace VS {
 				databaseOptions.chunkSizeY * databaseOptions.chunkSizeZ;
 			
 			optimizedChunks = new OptimizedChunk[chunkCount];
+			chunkPriorityOrder = new unsigned short[chunkCount];
+
 			for (int x = 0; x < chunkCount; x++)
 				archive(optimizedChunks[x]);
+
+			for (int x = 0; x < chunkCount; x++)
+				archive(chunkPriorityOrder[x]);
 			
 		}
 

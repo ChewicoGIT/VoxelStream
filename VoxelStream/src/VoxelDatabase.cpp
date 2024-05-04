@@ -20,19 +20,20 @@ VS::VoxelDatabase::VoxelDatabase(VS::DatabaseOptions opt)
 
 VS::VoxelDatabase::VoxelDatabase(const char* fileLoaction)
 {
-	VoxelDatabaseData _databaseData;
+	VoxelDatabaseData _data;
 
 	{
 		std::ifstream fileStream(fileLoaction, std::ios::binary);
 		cereal::PortableBinaryInputArchive _outputArchive(fileStream);
-		_outputArchive(_databaseData);
+		_outputArchive(_data);
 
 	}
 
-	dbOpt = _databaseData.databaseOptions;
-	chunkMemory = new ChunkMemoryManager(dbOpt, _databaseData.optimizedChunks);
+	dbOpt = _data.databaseOptions;
+	chunkMemory = new ChunkMemoryManager(dbOpt, _data.optimizedChunks, _data.chunkPriorityOrder);
 
-	delete[] _databaseData.optimizedChunks;
+	delete[] _data.optimizedChunks;
+	delete[] _data.chunkPriorityOrder;
 }
 
 VS::VoxelDatabase::~VoxelDatabase()
@@ -125,10 +126,14 @@ void VS::VoxelDatabase::saveData(const char* fileLocation)
 	// Constructing
 	VoxelDatabaseData _data{
 		.databaseOptions = dbOpt,
-		.optimizedChunks = nullptr
+		.optimizedChunks = nullptr,
+		.chunkPriorityOrder = nullptr
 	};
 
+	int fullyLoadedCount = dbOpt.fullyLoadedChunkBufferSize;
+
 	_data.optimizedChunks = new OptimizedChunk[chunkCount]();
+	_data.chunkPriorityOrder = new unsigned short[chunkCount]();
 
 	for (int chunkID = 0; chunkID < chunkCount; chunkID++) {
 		Chunk& _workingChunk = chunkMemory->getChunk(chunkID);
@@ -136,10 +141,12 @@ void VS::VoxelDatabase::saveData(const char* fileLocation)
 		{
 		case ChunkSaveState::FullyLoadedChunk:
 			_data.optimizedChunks[chunkID] = OptimizedChunk(*_workingChunk.fullyLoadedChunk);
+			_data.chunkPriorityOrder[_workingChunk.priorityPosition] = chunkID;
 			break;
 
 		case ChunkSaveState::OptimizedChunk:
 			_data.optimizedChunks[chunkID] = OptimizedChunk(*_workingChunk.optimizedChunk);
+			_data.chunkPriorityOrder[_workingChunk.priorityPosition + fullyLoadedCount] = chunkID;
 			break;
 		}
 	}
@@ -152,6 +159,7 @@ void VS::VoxelDatabase::saveData(const char* fileLocation)
 	}
 
 	delete[] _data.optimizedChunks;
+	delete[] _data.chunkPriorityOrder;
 }
 
 int VS::VoxelDatabase::getTransformations()

@@ -5,7 +5,6 @@ const VS::DatabaseOptions _dbOpt = {
 	.chunkSizeX = 64,
 	.chunkSizeY = 16,
 	.chunkSizeZ = 64,
-	.maxBlockID = 300,
 	.fullyLoadedChunkBufferSize = 64 * 1 * 64 * 1 + 20,
 	.modifiedVoxelPriorityValue = 100,
 	.queryedVoxelPriorityValue = 10

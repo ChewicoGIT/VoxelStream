@@ -26,7 +26,6 @@ namespace VS {
 			_databaseOptions.chunkSizeY,
 			_databaseOptions.chunkSizeZ,
 			_databaseOptions.fullyLoadedChunkBufferSize,
-			_databaseOptions.maxBlockID,
 			_databaseOptions.modifiedVoxelPriorityValue,
 			_databaseOptions.queryedVoxelPriorityValue);
 

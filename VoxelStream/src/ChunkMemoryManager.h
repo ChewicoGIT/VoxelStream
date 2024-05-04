@@ -8,7 +8,7 @@ namespace VS {
 	{
 	public:
 		ChunkMemoryManager(DatabaseOptions _dbOpt);
-		ChunkMemoryManager(DatabaseOptions _dbOpt, OptimizedChunk* optimizedChunk);
+		ChunkMemoryManager(DatabaseOptions _dbOpt, OptimizedChunk* optimizedChunk, unsigned short* priorityOrder);
 		~ChunkMemoryManager();
 
 		Chunk& getChunk(ARRAY_POINTER id);

@@ -14,11 +14,6 @@ namespace VS {
 		unsigned int chunkSizeY = 5;
 		unsigned int chunkSizeZ = 20;
 
-		/// This is a very important value and it specifies
-		/// the max id of a block id, if you try to acces a 
-		/// block id bigger than this it will give an error
-		unsigned int maxBlockID = 2;
-
 		/// This parameter tell the buffer size of voxel raw Data.
 		/// This data is stored raw so consumes more memory
 		/// A convenient value would be the chunkSizeX * chunkSizeZ

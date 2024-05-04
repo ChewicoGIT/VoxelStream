@@ -13,7 +13,7 @@ void saveExample() {
 
 		int randomX = x / 2024;
 		int randomY = rand() % (16 * 1 * 32);
-		int randomZ = rand() % (5 * 1 * 32);
+		int randomZ = rand() % (64 * 1 * 32);
 
 		unsigned short randomVoxel = rand() % 200;
 		unsigned short randomStat = rand() % 200;
@@ -49,7 +49,7 @@ void saveExample() {
 
 	vd->saveData("voxels.bin");
 	std::cout << "Saved in voxels.bin" << "\n";
-	delete vd;
+	//delete vd;
 
 }
 
@@ -61,7 +61,7 @@ void loadExample() {
 
 	std::cout << " Loading... \n";
 	auto _start = std::chrono::high_resolution_clock::now();
-	vd = new VS::VoxelDatabase("voxels.bin");
+	//vd = new VS::VoxelDatabase("voxels.bin");
 
 	auto _end = std::chrono::high_resolution_clock::now();
 	auto _duration = std::chrono::duration_cast<std::chrono::milliseconds>(_end - _start);
@@ -77,7 +77,7 @@ void loadExample() {
 
 		int randomX = x / 2024;
 		int randomY = rand() % (16 * 1 * 32);
-		int randomZ = rand() % (5 * 1 * 32);
+		int randomZ = rand() % (64 * 1 * 32);
 
 		unsigned short randomVoxel = rand() % 200;
 		unsigned short randomStat = rand() % 200;
