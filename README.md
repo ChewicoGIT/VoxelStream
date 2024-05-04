@@ -26,7 +26,6 @@ const VS::DatabaseOptions _dbOptions = {
 	.chunkSizeX = 64,
 	.chunkSizeY = 16,
 	.chunkSizeZ = 64,
-	.maxBlockID = 200,
 	.fullyLoadedChunkBufferSize = 64 * 64 + 10,
 	.modifiedVoxelPriorityValue = 34,
 	.queryedVoxelPriorityValue = 1
@@ -34,7 +33,6 @@ const VS::DatabaseOptions _dbOptions = {
 ```
 #### Parameters:
 -   To define the size, you have to specify it in chunks. Each chunk is 32 voxels in each direction. So, if you put 64 chunks, this means the world will be 64 chunks * 32 voxels in the direction you decided.
--   Max block ID is the max block ID you will have. If you have 300 types of blocks and your highest ID is 345, you have to put 346. It's always 1 + max block ID.
 -   Fully loaded chunk buffer size is a special part of the library. For better understanding, read the 'How Does It Work' part. Basically, this is the amount of chunks you think will be constantly edited in the world. The more you put, the more memory it will consume. The optimal value would be your ChunkSizeX * ChunkSizeZ + some amount or even less.
 -   Modified Voxel Priority value is how an edit of a voxel increments the priority in a chunk. The optimal value is the chunk size / 2.
 -   Queryed Voxel Priority value is how an obtained voxel increments the priority in a chunk. The optimal value is low because obtaining a value does not affect CPU usage in an optimal chunk.
@@ -72,8 +70,6 @@ This will create a project solution tu just build the project
 
 ## How does it work?
 
-It has 2 memory optimitzation, chunk storing and voxel palette
-
 ### Chunk storing
 
 
@@ -83,11 +79,6 @@ The other method is a dynamic array which stores Nodes that are made of a voxel 
 
 How to decide which one to use for every voxel? This will be decided dynamically depending on the usage. Internally, there is a big list of priority or chunk usage. Every time a block is updated or obtained, it will increase in the priority group, and if it is used frequently, it will become a fully loaded chunk. However, if it is not used, it will eventually be replaced by another that is used more, and all of it is dynamic.
 
- 
-
-### Voxel Palette
-
-A voxel contains a 2-byte ID that references a palette that has the info of the chunk, and it can be custom. This means that instead of saving the information on the voxel array and incrementing the save size, we can only store the ID with 2 bytes and use less memory.
 
 # Benchmark
 
