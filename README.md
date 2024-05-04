@@ -7,8 +7,8 @@ This is a C++ library to provide a memory-efficient way to store voxels in a fix
 
 - Memory-efficient chunk store
 - Custom voxel store (Only when compiled)
-- Up to 2^16 possible voxel combinations
 - Very simple API without external dependencies
+- World Serialization and Saving
 
 ## How to Use?
 ### Include:
@@ -60,6 +60,17 @@ void funct(){
     
 }
 ```
+###  Save/Load Database:
+To save the database you only need to call the save function and pass the location
+```cpp
+myVoxelDatabase.saveData("./location");
+```
+If you want to load an existing database you only need to initialize the database with the location
+of the file and it will automatically get the dbOption from the save
+```cpp
+VS::VoxelDatabase myVoxelDatabase("./location");
+```
+
 ## Build
 This project uses Premake, it is very easy to use just look up the documentation 
 
@@ -70,10 +81,7 @@ This will create a project solution tu just build the project
 
 ## How does it work?
 
-### Chunk storing
-
-
-VoxelStream uses two methods for storing chunks (32 x 32 x 32). One is a fully loaded chunk, which means it is an array of fixed size of 32 x 32 x 32. This method is very optimal for modifying and obtaining values, but it is very low efficient in memory, so we want to minimize it.
+VoxelStream splits the space 2 chunks (32 x 32 x 32). One is a fully loaded chunk, which means it is an array of fixed size of 32 x 32 x 32. This method is very optimal for modifying and obtaining values, but it is very low efficient in memory, so we want to minimize it.
 
 The other method is a dynamic array which stores Nodes that are made of a voxel ID and a repetition value. This means that instead of repeating voxels, it can join them in a single group and use less memory, but this means that obtaining and reading memory will be slower.
 
@@ -81,8 +89,6 @@ How to decide which one to use for every voxel? This will be decided dynamically
 
 
 # Benchmark
-
-
 This library is made for real applications in games which use voxels in interactive worlds. Normally, there are always chunks that are used a lot and others like inside terrain that are not even referenced until something happens. But if we make a simple benchmark where we have a world of 64 chunks (2048 voxels) x 64 chunks x 16 chunks(512 voxels) and we put a fully loaded chunk buffer of 64 x 64 + 10 and we edit 1,000,000 voxels in any random place, we get:
 
 808 milliseconds and 489 transformations (optimized chunks to fully loaded chunk swaps), and it does arrive at 300MB of memory. If we took this benchmark without these optimizations, we would get a memory usage of 32 voxels * 32 voxels * 32 voxels * 64 chunks * 64 chunks * 16 chunks * 4 bytes per voxel (voxelID, voxel state ...) = 8GB of memory. So it is an improvement of 27:1.
