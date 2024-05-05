@@ -2,7 +2,7 @@
 
 void saveExample() {
 
-	vd = new VS::VoxelDatabase(_dbOpt);
+	vd = new vs::VoxelDatabase(_dbOpt);
 
 	time_t randomSeed = time(NULL);
 
@@ -18,7 +18,7 @@ void saveExample() {
 		unsigned short randomVoxel = rand() % 200;
 		unsigned short randomStat = rand() % 200;
 
-		vd->SetVoxel(randomX, randomY, randomZ, VS::VoxelData{
+		vd->SetVoxel(randomX, randomY, randomZ, vs::VoxelData{
 			.blockID = randomVoxel,
 			.lightInfo = randomStat
 			});
@@ -61,7 +61,7 @@ void loadExample() {
 
 	std::cout << " Loading... \n";
 	auto _start = std::chrono::high_resolution_clock::now();
-	//vd = new VS::VoxelDatabase("voxels.bin");
+	//vd = new vs::VoxelDatabase("voxels.bin");
 
 	auto _end = std::chrono::high_resolution_clock::now();
 	auto _duration = std::chrono::duration_cast<std::chrono::milliseconds>(_end - _start);
@@ -82,7 +82,7 @@ void loadExample() {
 		unsigned short randomVoxel = rand() % 200;
 		unsigned short randomStat = rand() % 200;
 
-		VS::VoxelData voxel = vd->GetVoxel(randomX, randomY, randomZ);
+		vs::VoxelData voxel = vd->GetVoxel(randomX, randomY, randomZ);
 
 		if (voxel.blockID != randomVoxel || voxel.lightInfo != randomStat) {
 			collisionOrError++;

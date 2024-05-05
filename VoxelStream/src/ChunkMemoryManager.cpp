@@ -5,7 +5,7 @@
 #include "InternalDefinitions.h"
 #include <iostream>
 
-VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt)
+vs::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt)
 	:dbOpt(_dbOpt)
 {
 
@@ -48,7 +48,7 @@ VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt)
 
 }
 
-VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt, OptimizedChunk* _optimizedChunk, unsigned short* priorityOrder)
+vs::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt, OptimizedChunk* _optimizedChunk, unsigned short* priorityOrder)
 	: dbOpt(_dbOpt)
 {
 
@@ -91,7 +91,7 @@ VS::ChunkMemoryManager::ChunkMemoryManager(DatabaseOptions _dbOpt, OptimizedChun
 
 }
 
-VS::ChunkMemoryManager::~ChunkMemoryManager()
+vs::ChunkMemoryManager::~ChunkMemoryManager()
 {
 	delete[] chunks;
 	delete[] fullyLoadedChunksPriority;
@@ -99,12 +99,12 @@ VS::ChunkMemoryManager::~ChunkMemoryManager()
 	delete[] fullyLoadedChunks;
 }
 
-VS::Chunk& VS::ChunkMemoryManager::getChunk(ARRAY_POINTER id)
+vs::Chunk& vs::ChunkMemoryManager::getChunk(ARRAY_POINTER id)
 {
 	return chunks[id];
 }
 
-void VS::ChunkMemoryManager::incrementPriority(Chunk& _chunk)
+void vs::ChunkMemoryManager::incrementPriority(Chunk& _chunk)
 {
 	ARRAY_POINTER _oldPosition;
 	ARRAY_POINTER _nextPosition;

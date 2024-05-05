@@ -2,7 +2,7 @@
 #include "InternalDefinitions.h"
 #include <vector>
 
-namespace VS {
+namespace vs {
 	class Chunk
 	{
 	public:

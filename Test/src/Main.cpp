@@ -1,7 +1,7 @@
 #include "Mode.h"
 #include "Common.h"
 
-const VS::DatabaseOptions _dbOpt = {
+const vs::DatabaseOptions _dbOpt = {
 	.chunkSizeX = 64,
 	.chunkSizeY = 16,
 	.chunkSizeZ = 64,
@@ -10,7 +10,7 @@ const VS::DatabaseOptions _dbOpt = {
 	.queryedVoxelPriorityValue = 10
 };
 
-VS::VoxelDatabase* vd;
+vs::VoxelDatabase* vd;
 
 int main() {
 

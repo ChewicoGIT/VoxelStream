@@ -11,9 +11,9 @@
 #define MAX_ITIRENATIONS 4000000
 
 
-extern const VS::DatabaseOptions _dbOpt;
+extern const vs::DatabaseOptions _dbOpt;
 
-extern VS::VoxelDatabase* vd;
+extern vs::VoxelDatabase* vd;
 
 void randomAccesBenchMark();
 void weightedBenchmark();

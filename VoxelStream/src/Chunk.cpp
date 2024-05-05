@@ -3,47 +3,47 @@
 #include "OptimizedChunk.h"
 #include <iostream>
 
-VS::VoxelData VS::Chunk::getVoxel(unsigned short voxelID)
+vs::VoxelData vs::Chunk::getVoxel(unsigned short voxelID)
 {
 
 	switch (saveState)
 	{
 		// If it is a fully loaded chunk is easy to retrive to
-	case VS::ChunkSaveState::FullyLoadedChunk:
+	case vs::ChunkSaveState::FullyLoadedChunk:
 		return fullyLoadedChunk->voxelData[voxelID];
 
-	case VS::ChunkSaveState::OptimizedChunk:
+	case vs::ChunkSaveState::OptimizedChunk:
 		return optimizedChunk->getVoxel(voxelID);
 
 	}
 
-	return VS::VoxelData();
+	return vs::VoxelData();
 }
 
-void VS::Chunk::setVoxel(unsigned short voxelID, VS::VoxelData _voxel)
+void vs::Chunk::setVoxel(unsigned short voxelID, vs::VoxelData _voxel)
 {
 	switch (saveState)
 	{
 		// If it is a fully loaded chunk is easy to obtain
-	case VS::ChunkSaveState::FullyLoadedChunk:
+	case vs::ChunkSaveState::FullyLoadedChunk:
 		fullyLoadedChunk->voxelData[voxelID] = _voxel;
 		break;
 
-	case VS::ChunkSaveState::OptimizedChunk:
+	case vs::ChunkSaveState::OptimizedChunk:
 		optimizedChunk->setVoxel(voxelID, _voxel);
 		break;
 
 	}
 }
 
-void VS::Chunk::initOptimizedChunk(ARRAY_POINTER _priorityPosition, OptimizedChunk* _optimizedChunk)
+void vs::Chunk::initOptimizedChunk(ARRAY_POINTER _priorityPosition, OptimizedChunk* _optimizedChunk)
 {
 	optimizedChunk = new OptimizedChunk(*_optimizedChunk);
 	priorityPosition = _priorityPosition;
 	saveState = ChunkSaveState::OptimizedChunk;
 }
 
-void VS::Chunk::initFullyLoadedChunk(ARRAY_POINTER _priorityPosition, FullyLoadedChunk* _fullyLoadedChunk)
+void vs::Chunk::initFullyLoadedChunk(ARRAY_POINTER _priorityPosition, FullyLoadedChunk* _fullyLoadedChunk)
 {
 	fullyLoadedChunk = _fullyLoadedChunk;
 
@@ -52,7 +52,7 @@ void VS::Chunk::initFullyLoadedChunk(ARRAY_POINTER _priorityPosition, FullyLoade
 	
 }
 
-void VS::Chunk::initFullyLoadedChunk(ARRAY_POINTER _priorityPosition, FullyLoadedChunk* _fullyLoadedChunk, OptimizedChunk* _optimizedChunk)
+void vs::Chunk::initFullyLoadedChunk(ARRAY_POINTER _priorityPosition, FullyLoadedChunk* _fullyLoadedChunk, OptimizedChunk* _optimizedChunk)
 {
 	saveState = ChunkSaveState::FullyLoadedChunk;
 	fullyLoadedChunk = _fullyLoadedChunk;
@@ -62,14 +62,14 @@ void VS::Chunk::initFullyLoadedChunk(ARRAY_POINTER _priorityPosition, FullyLoade
 
 }
 
-void VS::Chunk::initOptimizedChunk(ARRAY_POINTER _priorityPosition)
+void vs::Chunk::initOptimizedChunk(ARRAY_POINTER _priorityPosition)
 {
 	priorityPosition = _priorityPosition;
 	optimizedChunk = new OptimizedChunk();
 	saveState = ChunkSaveState::OptimizedChunk;
 }
 
-void VS::Chunk::convertToOptimizedChunk(ARRAY_POINTER _priorityPosition)
+void vs::Chunk::convertToOptimizedChunk(ARRAY_POINTER _priorityPosition)
 {
 	priorityPosition = _priorityPosition;
 	optimizedChunk = new OptimizedChunk(*fullyLoadedChunk);
@@ -77,7 +77,7 @@ void VS::Chunk::convertToOptimizedChunk(ARRAY_POINTER _priorityPosition)
 
 }
 
-void VS::Chunk::convertToFullyLoadedChunk(ARRAY_POINTER _priorityPosition, FullyLoadedChunk* data)
+void vs::Chunk::convertToFullyLoadedChunk(ARRAY_POINTER _priorityPosition, FullyLoadedChunk* data)
 {
 	fullyLoadedChunk = data;
 	priorityPosition = _priorityPosition;
@@ -88,7 +88,7 @@ void VS::Chunk::convertToFullyLoadedChunk(ARRAY_POINTER _priorityPosition, Fully
 
 }
 
-VS::Chunk::~Chunk()
+vs::Chunk::~Chunk()
 {
 	if (saveState == ChunkSaveState::OptimizedChunk)
 		delete optimizedChunk;

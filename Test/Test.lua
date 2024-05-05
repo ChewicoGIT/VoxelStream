@@ -11,16 +11,16 @@ project "Test"
    {
       "src",
 
-	  "../VoxelStream/Include"
+	  "../SimpleMonoEmbedded/Include"
    }
 
    links
    {
-      "VoxelStream"
+      "SimpleMonoEmbedded"
    }
 
-   targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
-   objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
+   targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
+   objdir ("bin/int/" .. OutputDir .. "/%{prj.name}")
 
    filter "system:windows"
        systemversion "latest"

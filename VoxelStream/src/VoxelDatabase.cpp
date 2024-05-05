@@ -11,14 +11,14 @@
 #include "FullyLoadedChunk.h"
 #include "ChunkMemoryManager.h"
 
-VS::VoxelDatabase::VoxelDatabase(VS::DatabaseOptions opt)
+vs::VoxelDatabase::VoxelDatabase(vs::DatabaseOptions opt)
 	: dbOpt(opt)
 {
 	chunkMemory = new ChunkMemoryManager(opt);
 
 }
 
-VS::VoxelDatabase::VoxelDatabase(const char* fileLoaction)
+vs::VoxelDatabase::VoxelDatabase(const char* fileLoaction)
 {
 	VoxelDatabaseData _data;
 
@@ -36,13 +36,13 @@ VS::VoxelDatabase::VoxelDatabase(const char* fileLoaction)
 	delete[] _data.chunkPriorityOrder;
 }
 
-VS::VoxelDatabase::~VoxelDatabase()
+vs::VoxelDatabase::~VoxelDatabase()
 {
 	delete chunkMemory;
 
 }
 
-void VS::VoxelDatabase::SetVoxel(unsigned int x, unsigned int y, unsigned int z, VoxelData voxelData)
+void vs::VoxelDatabase::SetVoxel(unsigned int x, unsigned int y, unsigned int z, VoxelData voxelData)
 {
 	// Check for bounds
 #ifdef DEBUG
@@ -81,7 +81,7 @@ void VS::VoxelDatabase::SetVoxel(unsigned int x, unsigned int y, unsigned int z,
 
 }
 
-VS::VoxelData VS::VoxelDatabase::GetVoxel(unsigned int x, unsigned int y, unsigned int z)
+vs::VoxelData vs::VoxelDatabase::GetVoxel(unsigned int x, unsigned int y, unsigned int z)
 {
 	// Check for bounds
 #ifdef DEBUG
@@ -119,7 +119,7 @@ VS::VoxelData VS::VoxelDatabase::GetVoxel(unsigned int x, unsigned int y, unsign
 	return _chunk.getVoxel(VOXEL_ID(relativeX, relativeY, relativeZ));
 }
 
-void VS::VoxelDatabase::saveData(const char* fileLocation)
+void vs::VoxelDatabase::saveData(const char* fileLocation)
 {
 	const int chunkCount = dbOpt.chunkSizeX * dbOpt.chunkSizeY * dbOpt.chunkSizeZ;
 
@@ -162,14 +162,14 @@ void VS::VoxelDatabase::saveData(const char* fileLocation)
 	delete[] _data.chunkPriorityOrder;
 }
 
-int VS::VoxelDatabase::getTransformations()
+int vs::VoxelDatabase::getTransformations()
 {
 	int tempValue = chunkMemory->transformations;
 	chunkMemory->transformations = 0;
 	return tempValue;
 }
 
-int VS::VoxelDatabase::objectWasFullyLoaded()
+int vs::VoxelDatabase::objectWasFullyLoaded()
 {
 	int tempValue = _objectWasFullyLoaded;
 	_objectWasFullyLoaded = 0;

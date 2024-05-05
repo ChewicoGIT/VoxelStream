@@ -2,7 +2,7 @@
 #include "VoxelStream/DataStructures.h"
 #include "Chunk.h"
 
-namespace VS {
+namespace vs {
 
 	class ChunkMemoryManager
 	{

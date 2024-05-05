@@ -1,7 +1,7 @@
 #include "OptimizedChunk.h"
 #include "FullyLoadedChunk.h"
 
-VS::VoxelData VS::OptimizedChunk::getVoxel(ARRAY_POINTER position)
+vs::VoxelData vs::OptimizedChunk::getVoxel(ARRAY_POINTER position)
 {
 	int currentID = 0;
 
@@ -16,12 +16,12 @@ VS::VoxelData VS::OptimizedChunk::getVoxel(ARRAY_POINTER position)
 	return VoxelData();
 }
 
-VS::OptimizedChunk::OptimizedChunk()
+vs::OptimizedChunk::OptimizedChunk()
 {
 	nodes.push_back(Node() = { .voxel = 0, .repetition = VOXEL_X * VOXEL_Y * VOXEL_Z });
 }
 
-VS::OptimizedChunk::OptimizedChunk(FullyLoadedChunk& _fullyLoadedChunk)
+vs::OptimizedChunk::OptimizedChunk(FullyLoadedChunk& _fullyLoadedChunk)
 {
 
 	Node workingNode = {
@@ -46,7 +46,7 @@ VS::OptimizedChunk::OptimizedChunk(FullyLoadedChunk& _fullyLoadedChunk)
 
 }
 
-VS::OptimizedChunk::OptimizedChunk(OptimizedChunk& _optimizedChunk)
+vs::OptimizedChunk::OptimizedChunk(OptimizedChunk& _optimizedChunk)
 {
 
 	Node workingNode = {
@@ -77,7 +77,7 @@ VS::OptimizedChunk::OptimizedChunk(OptimizedChunk& _optimizedChunk)
 
 }
 
-void VS::OptimizedChunk::setVoxel(unsigned short position, VoxelData _voxel)
+void vs::OptimizedChunk::setVoxel(unsigned short position, VoxelData _voxel)
 {
 
 	int listID = 0;

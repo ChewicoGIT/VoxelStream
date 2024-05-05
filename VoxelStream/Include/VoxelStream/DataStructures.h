@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-namespace VS {
+namespace vs {
 	class ChunkMemoryManager;
 
 	struct DatabaseOptions {

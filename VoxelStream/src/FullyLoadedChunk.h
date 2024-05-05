@@ -1,7 +1,7 @@
 #pragma once
 #include "InternalDefinitions.h"
 
-namespace VS {
+namespace vs {
 
 	class FullyLoadedChunk {
 	public:

@@ -9,7 +9,7 @@
 
 #define VOXEL_ID(x, y, z) x + y * VOXEL_X + z * VOXEL_X * VOXEL_Y 
 
-namespace VS {
+namespace vs {
 	class Chunk;
 	class FullyLoadedChunk;
 	class OptimizedChunk;

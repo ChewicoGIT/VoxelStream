@@ -2,7 +2,7 @@
 #include <vector>
 #include "InternalDefinitions.h"
 
-namespace VS {
+namespace vs {
 	struct Node {
 		VoxelData voxel;
 		unsigned short repetition;

@@ -1,7 +1,7 @@
 #pragma once
 #include "DataStructures.h"
 
-namespace VS {
+namespace vs {
 
 	class VoxelDatabase
 	{

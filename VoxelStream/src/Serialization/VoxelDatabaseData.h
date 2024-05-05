@@ -4,7 +4,7 @@
 #include "ObjectsSerialization.h"
 #include "ChunkMemoryManager.h"
 
-namespace VS {
+namespace vs {
 
 	struct VoxelDatabaseData {
 		DatabaseOptions databaseOptions;

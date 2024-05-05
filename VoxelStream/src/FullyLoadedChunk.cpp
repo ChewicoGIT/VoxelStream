@@ -2,14 +2,14 @@
 #include "OptimizedChunk.h"
 
 
-VS::FullyLoadedChunk::FullyLoadedChunk()
+vs::FullyLoadedChunk::FullyLoadedChunk()
 {
 	for (int x = 0; x < VOXEL_X * VOXEL_Y * VOXEL_Z; x++)
 		voxelData[x] = VoxelData();
 
 }
 
-void VS::FullyLoadedChunk::load(OptimizedChunk* optimizedChunk)
+void vs::FullyLoadedChunk::load(OptimizedChunk* optimizedChunk)
 {
 	int di = 0;
 	int index = 0;
